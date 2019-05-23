@@ -1,0 +1,97 @@
+<!-- Show Profile -->
+
+<div class="container">
+  <!-- <div class="row">
+    <div class="col-sm-12" style="background-color: #e9ecef;">
+      <img width="75" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+    </div>
+  </div> -->
+
+  <form *ngIf="profileForm" [formGroup]="profileForm" (ngSubmit)="submitRegistrationForm()">
+    <div class="row">
+
+      <div class="col-sm-5">
+
+        <div class="card border-primary mb-3 image">
+          <div class="card-body">
+            <div>
+              <img *ngIf="!imageType && !image" class="img-thumbnail" src="https://secure.gravatar.com/avatar/4b097c362dae3cd858c8c1d63f2130d2?s=180&d=identicon"
+                alt="...">
+               <img *ngIf="imageType && image" class="img-thumbnail" src="data:{{imageType}};base64{{image}}"
+                alt="...">
+
+              <a *ngIf="updateProfile" id="change-picture" class="js-change-picture">Change picture
+                <input type="file" id="file"  (change)="handleFileInput($event.target.files)">
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-sm-7">
+        <div class="card data">
+
+          <div class="card-body ">
+            <div class="row">
+              <span>Profile Information</span>
+              <i *ngIf="!updateProfile" class="fas fa-pencil-alt" (click)="updateProfileForm()"></i>
+            </div>
+
+
+            <div class="row" *ngIf="!updateProfile">
+              Name : {{profileForm.controls.firstName.value}} {{profileForm.controls.lastName.value}}
+            </div>
+
+            <div class="form-group" *ngIf="updateProfile">
+              <label>
+                First Name
+                <input type="text" class="form-control input-width" formControlName="firstName">
+                <div class="danger" *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors">
+                  <div *ngIf="profileForm.controls.firstName.errors.required">First Name is required</div>
+                  <div *ngIf="profileForm.controls.firstName.errors.pattern">First Name is incorrect</div>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-group" *ngIf="updateProfile">
+              <label>
+                Last Name
+                <input type="text" class="form-control input-width" formControlName="lastName">
+                <div class="danger" *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors">
+                  <div *ngIf="profileForm.controls.lastName.errors.required">Last Name is required</div>
+                  <div *ngIf="profileForm.controls.lastName.errors.pattern">Last Name is incorrect</div>
+                </div>
+              </label>
+            </div>
+
+            <div class="row" *ngIf="!updateProfile">
+              UserName : {{profileForm.controls.username.value}}
+            </div>
+
+            <div class="form-group" *ngIf="updateProfile">
+              <label>
+                Email
+                <input type="text" class="form-control input-width" formControlName="username">
+                <div class="danger" *ngIf="profileForm.controls.username.touched  && profileForm.controls.username.errors">
+                  <div *ngIf="profileForm.controls.username.errors.required">Email is required</div>
+                  <div *ngIf="profileForm.controls.username.errors.email">Email is incorrect</div>
+                </div>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="form-group" *ngIf="updateProfile">
+            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary" type="cancel" (click)="showProfile(); false">Cancel</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>

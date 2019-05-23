@@ -1,0 +1,35 @@
+ 
+.input-width {
+    width: 300px;
+}
+
+.danger
+{
+    color: red;
+}
+
+.image{
+    margin: 105px;
+    height: 235px;
+}
+
+.data{
+    margin-left: -100px;
+    margin-top: 50px;
+
+}
+
+.js-change-picture{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(12,13,14,0.6);
+    border: 0;
+    border-radius: 0 0 3px 3px;
+    color: #FFF;
+    text-align: center;
+    padding: 8px 0;
+    width: auto;
+    transition: background .3s ease;
+}

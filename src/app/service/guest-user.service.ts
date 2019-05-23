@@ -22,4 +22,16 @@ export class GuestUserService {
     debugger;
     return this.http.post(this.url + '/login', Client);
   }
+
+  getData() {
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    return this.http.get(this.url + '/getData');
+  }
+
+  update(Client: any) {
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    return this.http.post(this.url + '/update', Client);
+  }
 }

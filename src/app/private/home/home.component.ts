@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GuestUserService } from 'src/app/service/guest-user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  fullName: any;
+  username: any;
+
+  constructor(private guestUserService: GuestUserService, private router: Router) { }
 
   ngOnInit() {
+
+    this.guestUserService.getData().subscribe(
+      (result) => {
+        console.log(result);
+        this.fullName = result['data']['firstname'] + ' ' + result['data']['lastname'];
+        this.username = result['data']['username'] ;
+      }
+    );
+  }
+
+  logout() {
+    //debugger;
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }

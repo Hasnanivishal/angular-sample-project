@@ -26,12 +26,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       // send a http request to save this data
       this.guestUserService.login(this.loginForm.value).subscribe(
-        (error) => {
-          console.log('error', error);
-        },
         (result) => {
-          console.log('result', result);
-          this.router.navigate(['/dashboard']);
+          if (result['token']) {
+            localStorage.setItem('authToken', result['token']);
+            this.router.navigate(['/dashboard']);
+          }
         }
       );
     } else {
