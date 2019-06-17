@@ -30,9 +30,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   submitRegistrationForm() {
-    if (this.profileForm.invalid) {
-      this.validateAllFields(this.profileForm);
-    } else {
       // send a http request to save this data
       this.guestUserService.create(this.profileForm.value).subscribe(
         (error) => {
@@ -43,7 +40,6 @@ export class RegistrationComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       );
-    }
   }
 
 

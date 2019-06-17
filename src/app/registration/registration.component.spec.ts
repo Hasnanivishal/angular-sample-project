@@ -10,7 +10,7 @@ import { ErrorInterceptor } from '../service/error-interceptor.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoginComponent } from '../login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { Observable, of  } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 fdescribe('RegistrationComponent', () => {
@@ -19,15 +19,18 @@ fdescribe('RegistrationComponent', () => {
   //let guestUserService: GuestUserService;
   let guestUserServiceSpy;
 
+  class HeroDetailServiceSpy {
+    testHero = {id: 42, name: 'Test Hero' };
+
+    /* emit clone of test hero, with changes merged in */
+    create = jasmine.createSpy('create').and.callFake(
+      (hero: object) => {
+        return of(Object.assign(this.testHero, hero));
+      }
+    );
+  }
+
   beforeEach(async(() => {
-
-    // Create a fake TwainService object with a `getQuote()` spy
-   const guestUserService = jasmine.createSpyObj('GuestUserService', ['create']);
-
-    // Make the spy return a synchronous Observable with the test data
-    guestUserServiceSpy = guestUserService.create.and.returnValue( of({
-      "result":"Passed"
-    }) );
 
     TestBed.configureTestingModule({
       declarations: [RegistrationComponent, LoginComponent],
@@ -42,11 +45,12 @@ fdescribe('RegistrationComponent', () => {
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: GuestUserService, useValue: guestUserService }]
+        { provide: GuestUserService, useValue: HeroDetailServiceSpy }]
     })
       .compileComponents();
   }));
 
+  let hdsSpy: HeroDetailServiceSpy;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationComponent);
@@ -54,6 +58,7 @@ fdescribe('RegistrationComponent', () => {
 
     // guestUserService = TestBed.get(GuestUserService); 
     fixture.detectChanges();
+    hdsSpy = fixture.debugElement.injector.get(GuestUserService) as any;
 
   });
 
@@ -107,32 +112,39 @@ fdescribe('RegistrationComponent', () => {
   });
 
 
-  // it('should submit Registration Form', inject([Router], (router: Router) => {
+  it('should submit Registration Form', inject([Router], (router: Router) => {
 
-  //   spyOn(component, 'submitRegistrationForm');
-  //   //spyOn(guestUserService, 'create').and.returnValue(of({'result': 'passed'}));
-  //   spyOn(router, 'navigate').and.stub();
+    spyOn(component, 'submitRegistrationForm');
+    //spyOn(guestUserService, 'create').and.returnValue(of({'result': 'passed'}));
+    spyOn(router, 'navigate').and.stub();
 
-  //   //expect(guestUserService).toBeDefined();
+    //expect(guestUserService).toBeDefined();
 
-  //   component.profileForm.controls['firstName'].setValue('Vishal');
-  //   component.profileForm.controls['lastName'].setValue('Hasnani');
-  //   component.profileForm.controls['username'].setValue('hasnani@vishal.com');
-  //   component.profileForm.controls['password'].setValue('12345678');
-  //   component.profileForm.controls['confirmPassword'].setValue('12345678');
+    component.profileForm.controls['firstName'].setValue('Vishal');
+    component.profileForm.controls['lastName'].setValue('Hasnani');
+    component.profileForm.controls['username'].setValue('hasnani@vishal.com');
+    component.profileForm.controls['password'].setValue('12345678');
+    component.profileForm.controls['confirmPassword'].setValue('12345678');
 
-   
-  //   debugger;
-  //   component.submitRegistrationForm();
 
-  //   expect(guestUserServiceSpy.calls.any()).toBe(true, 'create called');
-  //   expect(component.submitRegistrationForm).toHaveBeenCalled();
-  //   expect(component.profileForm.invalid).toBe(false);
+    debugger;
     
-  //  // expect(router.navigate).toHaveBeenCalledWith(['/login']);
+
+    
+    
+
+    component.submitRegistrationForm();
+
+    expect(hdsSpy.create.calls.count()).toBe(1, 'getHero called once');
+    
+
+    expect(component.submitRegistrationForm).toHaveBeenCalled();
+    expect(component.profileForm.invalid).toBe(false);
+
+    // expect(router.navigate).toHaveBeenCalledWith(['/login']);
 
 
-  // }));
+  }));
 
 
 
