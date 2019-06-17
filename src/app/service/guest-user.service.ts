@@ -8,7 +8,7 @@ export class GuestUserService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:3000/api';
+  url = 'http://localhost:3000/api/account';
 
   create(Client: any) {
     // tslint:disable-next-line:no-debugger
