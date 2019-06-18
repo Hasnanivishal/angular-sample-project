@@ -10,13 +10,26 @@ import { ErrorInterceptor } from '../service/error-interceptor.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoginComponent } from '../login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import {  of } from 'rxjs';
 
+
+class MyServiceStub {
+  constructor() { }
+
+  create(obj: object) {
+    return of({
+      result: 'Passed'
+    });
+  }
+
+}
 
 fdescribe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
-
+   let myService;
+   let mySpy;
+   
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
@@ -32,15 +45,18 @@ fdescribe('RegistrationComponent', () => {
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: GuestUserService, useValue: '' }]
+        { provide: GuestUserService, useValue: new MyServiceStub()}]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    myService = TestBed.get(GuestUserService);
+    mySpy = spyOn(myService , 'create').and.callThrough();
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    
   });
 
   it('should create', () => {
@@ -93,9 +109,12 @@ fdescribe('RegistrationComponent', () => {
   });
 
 
-  it('should submit Registration Form',  () => {
+  it('should submit Registration Form', () => {
 
-    spyOn(component, 'submitRegistrationForm');
+    debugger;
+
+    spyOn(component, 'submitRegistrationForm').and.callThrough();
+
     component.profileForm.controls['firstName'].setValue('Vishal');
     component.profileForm.controls['lastName'].setValue('Hasnani');
     component.profileForm.controls['username'].setValue('hasnani@vishal.com');
@@ -105,5 +124,9 @@ fdescribe('RegistrationComponent', () => {
     component.submitRegistrationForm();
     expect(component.submitRegistrationForm).toHaveBeenCalled();
     expect(component.profileForm.invalid).toBe(false);
+
+    expect(myService).toBeDefined();
+    expect(mySpy).toBeDefined();
+    expect(mySpy).toHaveBeenCalledTimes(1);
   });
 });
