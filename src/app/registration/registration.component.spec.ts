@@ -16,19 +16,6 @@ import { Observable, of } from 'rxjs';
 fdescribe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
-  //let guestUserService: GuestUserService;
-  let guestUserServiceSpy;
-
-  class HeroDetailServiceSpy {
-    testHero = {id: 42, name: 'Test Hero' };
-
-    /* emit clone of test hero, with changes merged in */
-    create = jasmine.createSpy('create').and.callFake(
-      (hero: object) => {
-        return of(Object.assign(this.testHero, hero));
-      }
-    );
-  }
 
   beforeEach(async(() => {
 
@@ -45,21 +32,15 @@ fdescribe('RegistrationComponent', () => {
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: GuestUserService, useValue: HeroDetailServiceSpy }]
+        { provide: GuestUserService, useValue: '' }]
     })
       .compileComponents();
   }));
 
-  let hdsSpy: HeroDetailServiceSpy;
-
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
-
-    // guestUserService = TestBed.get(GuestUserService); 
     fixture.detectChanges();
-    hdsSpy = fixture.debugElement.injector.get(GuestUserService) as any;
-
   });
 
   it('should create', () => {
@@ -112,42 +93,17 @@ fdescribe('RegistrationComponent', () => {
   });
 
 
-  it('should submit Registration Form', inject([Router], (router: Router) => {
+  it('should submit Registration Form',  () => {
 
     spyOn(component, 'submitRegistrationForm');
-    //spyOn(guestUserService, 'create').and.returnValue(of({'result': 'passed'}));
-    spyOn(router, 'navigate').and.stub();
-
-    //expect(guestUserService).toBeDefined();
-
     component.profileForm.controls['firstName'].setValue('Vishal');
     component.profileForm.controls['lastName'].setValue('Hasnani');
     component.profileForm.controls['username'].setValue('hasnani@vishal.com');
     component.profileForm.controls['password'].setValue('12345678');
     component.profileForm.controls['confirmPassword'].setValue('12345678');
 
-
-    debugger;
-    
-
-    
-    
-
     component.submitRegistrationForm();
-
-    expect(hdsSpy.create.calls.count()).toBe(1, 'getHero called once');
-    
-
     expect(component.submitRegistrationForm).toHaveBeenCalled();
     expect(component.profileForm.invalid).toBe(false);
-
-    // expect(router.navigate).toHaveBeenCalledWith(['/login']);
-
-
-  }));
-
-
-
-
-
+  });
 });
