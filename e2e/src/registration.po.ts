@@ -1,8 +1,8 @@
 import { browser, by, element } from 'protractor';
 
-export class AppPage {
+export class RegistrationPage {
   navigateTo() {
-    return browser.get('/register');
+    return browser.get('/');
   }
 
   getTitleText() {
