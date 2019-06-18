@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { RegistrationComponent } from './registration.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { ErrorInterceptor } from '../service/error-interceptor.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoginComponent } from '../login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
-import {  of } from 'rxjs';
+import { of } from 'rxjs';
 
 
 class MyServiceStub {
@@ -27,9 +27,9 @@ class MyServiceStub {
 fdescribe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
-   let myService;
-   let mySpy;
-   
+  let myService;
+  let mySpy;
+
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
@@ -37,26 +37,26 @@ fdescribe('RegistrationComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        RouterModule,
+        RouterTestingModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
       ],
       providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: GuestUserService, useValue: new MyServiceStub()}]
+        { provide: GuestUserService, useValue: new MyServiceStub() }]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+
     myService = TestBed.get(GuestUserService);
-    mySpy = spyOn(myService , 'create').and.callThrough();
+    mySpy = spyOn(myService, 'create').and.callThrough();
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    
   });
 
   it('should create', () => {
@@ -109,9 +109,12 @@ fdescribe('RegistrationComponent', () => {
   });
 
 
-  it('should submit Registration Form', () => {
+  it('should submit Registration Form', async(inject([Router], (router) => {
 
     debugger;
+
+    // add a spy
+    spyOn(router, 'navigate');
 
     spyOn(component, 'submitRegistrationForm').and.callThrough();
 
@@ -128,5 +131,7 @@ fdescribe('RegistrationComponent', () => {
     expect(myService).toBeDefined();
     expect(mySpy).toBeDefined();
     expect(mySpy).toHaveBeenCalledTimes(1);
-  });
+    expect(router.navigate).toHaveBeenCalled();
+  })
+  ));
 });
