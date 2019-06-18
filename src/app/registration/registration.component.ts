@@ -35,16 +35,16 @@ export class RegistrationComponent implements OnInit {
     } else {
       // send a http request to save this data
       this.guestUserService.create(this.profileForm.value).subscribe(
-        (error) => {
-          console.log('error', error);
-        },
-        (result) => {
-          console.log('result', result);
-          this.router.navigate(['/login']);
-        }
-      );
+        result => {
+          if (result) {
+            console.log('result', result);
+            this.router.navigate(['/login']);
+          }
 
-      this.router.navigate(['/login']);
+        },
+        error => {
+          console.log('error', error);
+        });
     }
   }
 
@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit {
       } else {
         matchingControl.setErrors(null);
       }
-    }
+    };
   }
 
 

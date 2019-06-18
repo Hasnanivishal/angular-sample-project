@@ -4,22 +4,22 @@ import { RegistrationComponent } from './registration.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { GuestUserService } from '../service/guest-user.service';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { JwtInterceptor } from '../service/jwt-interceptor.service';
 import { ErrorInterceptor } from '../service/error-interceptor.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoginComponent } from '../login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 
 class MyServiceStub {
   constructor() { }
 
   create(obj: object) {
-    return of({
-      result: 'Passed'
-    });
+     return of(new HttpResponse({ status: 200, body: { result: 'Registered Successfully' } }));
+
+    // return throwError(new Error('API is not working'));
   }
 
 }

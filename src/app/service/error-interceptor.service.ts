@@ -12,21 +12,19 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         evt => {
-        if (evt instanceof HttpResponse) {
-          if (evt.body) {
-            console.log(evt.body);
+          if (evt instanceof HttpResponse) {
+            if (evt.body) {
+              // console.log(evt.body);
+            }
           }
         }
-      }
       ),
       catchError(err => {
-        debugger;
         if (err.status === 401) {
           // auto logout if 401 response returned from api
         }
-
-        const error = err.error.message || err.statusText;
-        return throwError(error);
+        const error = err.message || err.statusText;
+        return throwError(new Error(`${error}`));
       }));
   }
 }
