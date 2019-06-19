@@ -9,6 +9,7 @@ import { GuestUserService } from './service/guest-user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './service/jwt-interceptor.service';
 import { ErrorInterceptor } from './service/error-interceptor.service';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -16,7 +17,8 @@ import { ErrorInterceptor } from './service/error-interceptor.service';
   declarations: [
     AppComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

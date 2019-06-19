@@ -6,6 +6,25 @@ export class RegistrationPage {
   }
 
   getTitleText() {
-    return element(by.css('app-root h1')).getText();
+    return element(by.id('registrationfromText')).getText();
   }
+
+  getSubmitButton() {
+    return element(by.id('registrationfromSignUpButton'));
+  }
+
+  getFormField(fieldId: string) {
+    return element(by.id(fieldId));
+  }
+
+  getFormFieldError(fieldErrorId: string) {
+    return element(by.id(fieldErrorId));
+  }
+
+  getLoginLink() {
+    return element(by.id('loginLink'));
+  }
+
+
+
 }
