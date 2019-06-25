@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
       // send a http request to save this data
       this.guestUserService.login(this.loginForm.value).subscribe(
         result => {
-          if (result['token']) {
+          if (result) {
+          // if (result['token']) {
             localStorage.setItem('authToken', result['token']);
             this.router.navigate(['/dashboard']);
           }
