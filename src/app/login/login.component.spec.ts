@@ -101,7 +101,7 @@ fdescribe('LoginComponent', () => {
 
     it('should Successfully Submit Registration Form', async(inject([Router], (router) => {
         // tslint:disable-next-line:max-line-length
-        guestUserServiceSpy = guestUserService.login.and.returnValue(of(new HttpResponse({ status: 200, body: { result: { token: 'DummyTokenIsSent' } } })));
+        guestUserServiceSpy = guestUserService.login.and.returnValue(of({ token: 'DummyTokenIsSent'} ));
 
         spyOn(router, 'navigate');
         spyOn(component, 'submitRegistrationForm').and.callThrough();
