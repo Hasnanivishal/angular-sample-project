@@ -8,9 +8,9 @@
   <div class="col-sm-12 offset-sm-0" style="background-color: #e9ecef;">
     <img width="75" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
-    <form [formGroup]="profileForm" (ngSubmit)="submitRegistrationForm()">
+    <form [formGroup]="profileForm" (ngSubmit)="submitRegistrationForm()" autocomplete="off">
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>
           First Name
           <input type="text" id="profileFormfirstName" class="form-control input-width" formControlName="firstName">
@@ -19,43 +19,76 @@
             <div *ngIf="profileForm.controls.firstName.errors.pattern">First Name is incorrect</div>
           </div>
         </label>
-      </div>
+      </div> -->
+
+    <div class="form-group">
+      <mat-form-field class="input-width" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" id="profileFormfirstName" placeholder="Placeholder" formControlName="firstName">
+        <mat-error id="profileFormfirstNameRequiredError" *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors && profileForm.controls.firstName.errors.required">First Name is
+          required </mat-error>
+        <mat-error *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors && profileForm.controls.firstName.errors.pattern">First Name is incorrect </mat-error>
+      </mat-form-field>
+    </div>
 
       <div class="form-group">
-        <label>
+        <!-- <label>
           Last Name
           <input type="text" id="profileFormlastName" class="form-control input-width" formControlName="lastName">
           <div class="danger" *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors">
             <div id="profileFormlastNameRequiredError" *ngIf="profileForm.controls.lastName.errors.required">Last Name is required</div>
             <div *ngIf="profileForm.controls.lastName.errors.pattern">Last Name is incorrect</div>
           </div>
-        </label>
+        </label> -->
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" id="profileFormlastName" placeholder="Last Name" formControlName="lastName">
+          <mat-error *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors && profileForm.controls.lastName.errors.required">Last Name is
+            required </mat-error>
+          <mat-error *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors && profileForm.controls.lastName.errors.pattern">Last Name is incorrect </mat-error>
+        </mat-form-field>
       </div>
 
+      
       <div class="form-group">
-        <label>
+        <!-- <label>
           Email
           <input type="text" id="profileFormusername" class="form-control input-width" formControlName="username">
           <div class="danger" *ngIf="profileForm.controls.username.touched  && profileForm.controls.username.errors">
             <div id="profileFormusernameRequiredError" *ngIf="profileForm.controls.username.errors.required">Email is required</div>
             <div *ngIf="profileForm.controls.username.errors.email">Email is incorrect</div>
           </div>
-        </label>
+        </label> -->
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" id="profileFormusername" placeholder="Email" formControlName="username">
+          <mat-error *ngIf="profileForm.controls.username.touched  && profileForm.controls.username.errors && profileForm.controls.username.errors.required">Email is
+            required </mat-error>
+          <mat-error *ngIf="profileForm.controls.username.touched  && profileForm.controls.username.errors && profileForm.controls.username.errors.email">Email is incorrect </mat-error>
+        </mat-form-field>
       </div>
 
       <div class="form-group">
-        <label>
+        <!-- <label>
           Password
           <input type="password" id="profileFormpassword" class="form-control input-width" formControlName="password">
           <div class="danger" *ngIf="profileForm.controls.password.touched && profileForm.controls.password.errors">
             <div id="profileFormpasswordRequiredError" *ngIf="profileForm.controls.password.errors.required">Password is required</div>
             <div *ngIf="profileForm.controls.password.errors.minlength">Password must be at least 8 characters</div>
           </div>
-        </label>
+        </label> -->
+
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="profileFormfirstName" placeholder="Password" formControlName="password">
+          <mat-error *ngIf="profileForm.controls.password.touched && profileForm.controls.password.errors && profileForm.controls.password.errors.required">Password is
+            required </mat-error>
+          <mat-error *ngIf="profileForm.controls.password.touched && profileForm.controls.password.errors && profileForm.controls.password.errors.pattern">Password must be at least 8 characters</mat-error>
+        </mat-form-field>
       </div>
  
       <div class="form-group">
-        <label>
+        <!-- <label>
           Confirm Password
           <input type="password" id="profileFormconfirmPassword" class="form-control input-width" formControlName="confirmPassword">
           <div class="danger" *ngIf="profileForm.controls.confirmPassword.touched && profileForm.controls.confirmPassword.errors">
@@ -63,7 +96,15 @@
             <div *ngIf="profileForm.controls.confirmPassword.errors.mustMatch ">
               Password is Must match</div>
           </div>
-        </label>
+        </label> -->
+
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" id="profileFormconfirmPassword" placeholder="Confirm Password" formControlName="confirmPassword">
+          <mat-error *ngIf="profileForm.controls.confirmPassword.touched && profileForm.controls.confirmPassword.errors && profileForm.controls.confirmPassword.errors.required">Confirm Password is
+            required </mat-error>
+          <mat-error *ngIf="profileForm.controls.confirmPassword.touched && profileForm.controls.confirmPassword.errors && profileForm.controls.confirmPassword.errors.mustMatch">Password is Must match</mat-error>
+        </mat-form-field>
       </div>
 
       <!-- <div class="form-group">
@@ -80,10 +121,12 @@
       </div> -->
       
       <div class="form-group">
-        <button class="btn btn-primary" id="registrationfromSignUpButton" type="submit">Sign Up</button>
+        
+        <button mat-raised-button color="primary" id="registrationfromSignUpButton" type="submit">Sign Up</button>
       </div>
     </form>
 
+    
     <span >Already have an account? <a id="loginLink" [routerLink]="['/login']">Log in</a></span>
 
   </div>

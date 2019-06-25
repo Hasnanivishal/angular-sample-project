@@ -10,7 +10,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './service/jwt-interceptor.service';
 import { ErrorInterceptor } from './service/error-interceptor.service';
 import { ErrorComponent } from './error/error.component';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 
 
 @NgModule({
@@ -25,6 +26,10 @@ import { ErrorComponent } from './error/error.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
