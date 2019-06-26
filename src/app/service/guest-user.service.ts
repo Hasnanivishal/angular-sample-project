@@ -8,7 +8,8 @@ export class GuestUserService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:3000/api/account';
+  // url = 'http://localhost:3000/api/account';
+  url = 'https://vishal-hasnani-node.herokuapp.com/api/account';
 
   create(Client: any) {
     // tslint:disable-next-line:no-debugger
@@ -24,7 +25,7 @@ export class GuestUserService {
   }
 
   getData() {
-    this.url = 'http://localhost:3000/api/userInfo';
+    this.url = 'https://vishal-hasnani-node.herokuapp.com/api/userInfo';
     // tslint:disable-next-line:no-debugger
     debugger;
     return this.http.get(this.url + '/getData');
@@ -32,8 +33,7 @@ export class GuestUserService {
 
   update(Client: any) {
     // tslint:disable-next-line:no-debugger
-    this.url = 'http://localhost:3000/api/userInfo';
-    debugger;
+    this.url = 'https://vishal-hasnani-node.herokuapp.com/api/userInfo';
     return this.http.post(this.url + '/update', Client);
   }
 }
