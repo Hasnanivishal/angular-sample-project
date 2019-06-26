@@ -1,10 +1,9 @@
-<div class="container">
+<div style="text-align: center; background-color: #e9ecef;">
 
-  <div class="col-sm-12 offset-sm-0" style="background-color: #e9ecef;">
     <img width="75" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
     <form [formGroup]="loginForm" (ngSubmit)="submitRegistrationForm()">
       <div class="form-group">
-        <label>
+        <!-- <label>
           Email
           <input type="text" class="form-control" formControlName="username">
           <div class="danger" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors">
@@ -12,18 +11,39 @@
             <div *ngIf="loginForm.controls.username.errors.email">Email is incorrect</div>
           </div>
 
-        </label>
+        </label> -->
+
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="text" placeholder="Email" formControlName="username">
+          <mat-error *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.required">Email
+            is
+            required </mat-error>
+          <mat-error *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.email">Email
+            is incorrect </mat-error>
+        </mat-form-field>
       </div>
 
       <div class="form-group">
-        <label>
+        <!-- <label>
           Password
           <input type="password" class="form-control" formControlName="password">
           <div class="danger" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors">
             <div *ngIf="loginForm.controls.password.errors.required">Password is required</div>
             <div *ngIf="loginForm.controls.password.errors.minlength">Password minLength is 8</div>
           </div>
-        </label>
+        </label> -->
+
+        <mat-form-field class="input-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Password" formControlName="password">
+          <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.required">Password
+            is
+            required </mat-error>
+          <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.pattern">Password
+            must be at least 8 characters</mat-error>
+        </mat-form-field>
+
       </div>
       <div class="form-group">
         <button class="btn btn-primary" type="submit" style="width: 200px;">Login</button></div>
@@ -32,5 +52,5 @@
 
 
     <span>Don’t have an account? <a id="registerLink" [routerLink]="['/register']">Sign up</a></span>
-  </div>
+  
 </div>
