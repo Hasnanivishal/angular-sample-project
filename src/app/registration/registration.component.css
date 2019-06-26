@@ -1,9 +1,13 @@
 
 .input-width {
-    width: 300px;
+    width: 500px;
 }
 
 .danger
 {
     color: red;
+}
+
+.form-group {
+    margin-bottom: 0rem !important;
 }
