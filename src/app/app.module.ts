@@ -11,7 +11,7 @@ import { JwtInterceptor } from './service/jwt-interceptor.service';
 import { ErrorInterceptor } from './service/error-interceptor.service';
 import { ErrorComponent } from './error/error.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatMenuModule } from '@angular/material';
 
 
 @NgModule({
@@ -29,7 +29,9 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/ma
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

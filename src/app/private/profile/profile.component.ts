@@ -15,8 +15,7 @@ export class ProfileComponent implements OnInit {
 
   updateProfile = false;
   fileToUpload: File = null;
-  imageType: any;
-  image: any;
+  imageURL: any;
 
   ngOnInit() {
     this.guestUserService.getData().subscribe(
@@ -28,8 +27,7 @@ export class ProfileComponent implements OnInit {
           username: [{ value: result['data']['username'], disabled: true }, Validators.compose([Validators.required, Validators.email])]
         });
         debugger;
-        this.imageType = result['data']['imageFile']['mimetype'];
-        this.image = result['data']['imageFile']['data'];
+        this.imageURL = result['data']['imageFile'];
       }
     );
   }

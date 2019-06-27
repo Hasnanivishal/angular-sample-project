@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { GuestUserService } from './service/guest-user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'sample';
+
+  constructor(private cdref: ChangeDetectorRef, private guestUserService: GuestUserService) { }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
+
 }

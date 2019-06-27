@@ -1,0 +1,16 @@
+.example-margin {
+    margin: 0 10px;
+  }
+
+  .loaderdiv
+  {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+    height: 100%;
+  }
+
+  .loader{
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  }

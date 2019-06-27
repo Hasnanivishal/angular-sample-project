@@ -15,9 +15,9 @@
         <div class="card border-primary mb-3 image">
           <div class="card-body">
             <div>
-              <img *ngIf="!imageType && !image" class="img-thumbnail" src="https://secure.gravatar.com/avatar/4b097c362dae3cd858c8c1d63f2130d2?s=180&d=identicon"
+              <img *ngIf="!imageURL" class="img-thumbnail" src="http://res.cloudinary.com/do4dvpz7j/raw/upload/v1561611809/kylicrial2tdyonhfw45"
                 alt="...">
-               <img *ngIf="imageType && image" class="img-thumbnail" src="data:{{imageType}};base64{{image}}"
+               <img *ngIf="imageURL" class="img-thumbnail" src="{{ imageURL }} "
                 alt="...">
 
               <a *ngIf="updateProfile" id="change-picture" class="js-change-picture">Change picture
