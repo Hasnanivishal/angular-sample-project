@@ -9,7 +9,7 @@ import { GuestUserService } from './service/guest-user.service';
 export class AppComponent {
   title = 'sample';
 
-  constructor(private cdref: ChangeDetectorRef, private guestUserService: GuestUserService) { }
+  constructor(private cdref: ChangeDetectorRef, public guestUserService: GuestUserService) { }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterContentChecked() {
