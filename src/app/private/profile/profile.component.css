@@ -1,5 +1,5 @@
  
-.input-width {
+/* .input-width {
     width: 300px;
 }
 
@@ -17,7 +17,12 @@
     margin-left: -100px;
     margin-top: 50px;
 
+} */
+
+.form-group {
+    margin-bottom: 0rem !important;
 }
+
 
 .js-change-picture{
     position: absolute;
@@ -33,3 +38,9 @@
     width: auto;
     transition: background .3s ease;
 }
+
+
+/* /deep/ mat-card-title.mat-card-title {
+    background-color: blue;
+  } */
+
