@@ -22,7 +22,7 @@ import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButton
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,

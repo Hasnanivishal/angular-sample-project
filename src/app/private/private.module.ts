@@ -8,9 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule, MatMenuModule, MatIconModule, MatButtonModule,
   MatDividerModule, MatListModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { HomePageListingComponent } from './home-page-listing/home-page-listing.component';
 
 @NgModule({
-  declarations: [HomeComponent, ProfileComponent, DashboardComponent],
+  declarations: [HomeComponent, ProfileComponent, DashboardComponent, HomePageListingComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
