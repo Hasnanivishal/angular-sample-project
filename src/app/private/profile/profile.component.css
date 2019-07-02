@@ -3,6 +3,10 @@
     width: 500px;
 }
 
+.img-thumbnail{
+    height:200px !important;
+  }
+
 .danger
 {
     color: red;

@@ -6,7 +6,7 @@ import { AuthGuardService, UnAuthGuardService } from './service/auth-guard.servi
 import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
-  {path: '', component: RegistrationComponent},
+  {path: '', redirectTo: 'register', pathMatch: 'full'},
   {path: 'register', component: RegistrationComponent, canActivate: [UnAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [UnAuthGuardService]},
   {path: 'error', component: ErrorComponent},
