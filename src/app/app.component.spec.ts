@@ -1,35 +1,58 @@
-// import { TestBed, async } from '@angular/core/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { AppComponent } from './app.component';
+import { TestBed, async, ComponentFixture, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { GuestUserService } from './service/guest-user.service';
+import { of, BehaviorSubject } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
-// describe('AppComponent', () => {
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       imports: [
-//         RouterTestingModule
-//       ],
-//       declarations: [
-//         AppComponent
-//       ],
-//     }).compileComponents();
-//   }));
+xdescribe('AppComponent', () => {
+    let component: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
+    let service: GuestUserService;
+    beforeEach(async(() => {
 
-//   it('should create the app', () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     const app = fixture.debugElement.componentInstance;
-//     expect(app).toBeTruthy();
-//   });
 
-//   it(`should have as title 'sample'`, () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     const app = fixture.debugElement.componentInstance;
-//     expect(app.title).toEqual('sample');
-//   });
+        TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+                MatProgressSpinnerModule,
+                BrowserAnimationsModule,
+                HttpClientModule
+            ],
+            providers: [GuestUserService],
+            declarations: [
+                AppComponent
+            ],
+        }).compileComponents();
+    }));
 
-//   it('should render title in a h1 tag', () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     fixture.detectChanges();
-//     const compiled = fixture.debugElement.nativeElement;
-//     expect(compiled.querySelector('h1').textContent).toContain('Welcome to sample!');
-//   });
-// });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        service = TestBed.get(GuestUserService);
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should contain router outlet', () => {
+        const compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('router-outlet')).toBeTruthy();
+    });
+
+    // it('should render loader if isLoading true', () => {
+    //     fixture.detectChanges();
+    //     spyOn(service, 'isLoading').and.returnValue(false);
+    //     const compiled = fixture.debugElement.nativeElement;
+    //     expect(service.isLoading).toBeTruthy();
+    //     expect(fixture.debugElement.query(By.css('.loader'))).toBeDefined();
+    //     // expect(compiled.querySelector('mat-spinner')).toBeTruthy();
+    // });
+
+
+});

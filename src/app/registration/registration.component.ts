@@ -27,7 +27,6 @@ export class RegistrationComponent implements OnInit {
 
 
   ngOnInit() {
-   
   }
 
   submitRegistrationForm() {
@@ -38,13 +37,11 @@ export class RegistrationComponent implements OnInit {
       this.guestUserService.create(this.profileForm.value).subscribe(
         result => {
           if (result) {
-            console.log('result', result);
             this.router.navigate(['/login']);
           }
 
         },
         error => {
-          console.log('error', error);
           this.router.navigate(['/error']);
         });
     }

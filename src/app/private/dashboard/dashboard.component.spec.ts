@@ -9,7 +9,7 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { ErrorComponent } from 'src/app/error/error.component';
 import { RegistrationComponent } from 'src/app/registration/registration.component';
 
-describe('DashboardComponent', () => {
+xdescribe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 

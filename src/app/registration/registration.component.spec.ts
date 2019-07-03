@@ -11,9 +11,11 @@ import { AppRoutingModule } from '../app-routing.module';
 import { LoginComponent } from '../login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { of, throwError } from 'rxjs';
-import { ErrorComponent } from '../error/error.component';
+import { ErrorComponent } from '../error/error.component'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatMenuModule, MatProgressSpinnerModule } from '@angular/material';
 
-fdescribe('RegistrationComponent', () => {
+xdescribe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
   let guestUserService: any;
@@ -30,6 +32,12 @@ fdescribe('RegistrationComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatProgressSpinnerModule
       ],
       providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

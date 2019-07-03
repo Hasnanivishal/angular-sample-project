@@ -7,8 +7,7 @@ import { GuestUserService } from './service/guest-user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'sample';
-
+ 
   constructor(private cdref: ChangeDetectorRef, public guestUserService: GuestUserService) { }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -17,3 +16,4 @@ export class AppComponent {
   }
 
 }
+ 
