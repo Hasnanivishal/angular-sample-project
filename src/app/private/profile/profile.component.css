@@ -1,23 +1,24 @@
- 
+
 .input-width {
-    width: 300px;
+    width: 500px;
 }
+
+.img-thumbnail{
+    height:200px !important;
+  }
 
 .danger
 {
     color: red;
 }
 
-.image{
-    margin: 105px;
-    height: 235px;
+.form-group {
+    margin-bottom: 0rem !important;
 }
 
-.data{
-    margin-left: -100px;
-    margin-top: 50px;
-
-}
+/* .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    height: 70px !important;
+} */
 
 .js-change-picture{
     position: absolute;
@@ -33,3 +34,9 @@
     width: auto;
     transition: background .3s ease;
 }
+
+
+/* /deep/ mat-card-title.mat-card-title {
+    background-color: blue;
+  } */
+

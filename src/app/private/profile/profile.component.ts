@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { GuestUserService } from 'src/app/service/guest-user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,48 +10,42 @@ import { GuestUserService } from 'src/app/service/guest-user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private guestUserService: GuestUserService) { }
+  constructor(private fb: FormBuilder, private guestUserService: GuestUserService, private router: Router) { }
 
   profileForm: FormGroup;
-
   updateProfile = false;
   fileToUpload: File = null;
   imageURL: any;
+  @ViewChild('imageFile', { static: false }) imageFile: ElementRef;
 
   ngOnInit() {
     this.guestUserService.getData().subscribe(
       (result) => {
-        // result['data']['firstname']
         this.profileForm = this.fb.group({
           firstName: [result['data']['firstname'], Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]+$')])],
           lastName: [result['data']['lastname'], Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]+$')])],
           username: [{ value: result['data']['username'], disabled: true }, Validators.compose([Validators.required, Validators.email])]
         });
-        debugger;
         this.imageURL = result['data']['imageFile'];
       }
     );
   }
 
-  updateProfileForm() {
-    this.updateProfile = true;
-  }
-
-  showProfile() {
-    this.updateProfile = false;
-  }
 
   handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+    const selectedImagefile = files.item(0);
+    // check for size should be less then 500kb and image type should be image
+    if (selectedImagefile.size < 500000 && selectedImagefile.type.includes('image/')) {
+      this.fileToUpload = selectedImagefile;
+    } else {
+      alert('Invalid File');
+      this.imageFile.nativeElement.value = '';
+    }
 
   }
 
   submitRegistrationForm() {
-    
-    console.log("data is...", this.profileForm.value);
-
     const formData: FormData = new FormData();
-    // formData.append('formData', JSON.stringify(this.profileForm.value));
     formData.append('file', this.fileToUpload);
 
     Object.entries(this.profileForm.value).forEach(
@@ -60,13 +55,27 @@ export class ProfileComponent implements OnInit {
     );
 
     this.guestUserService.update(formData).subscribe(
-      (result) => {
+      result => {
         if (result['result']) {
-          debugger;
           this.updateProfile = false;
-         
+
         }
+      },
+      error => {
+        console.log('error', error.message);
+        this.router.navigate(['/error']);
       }
+
     );
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    if (this.updateProfile) {
+      if (!window.confirm('Are you sure you wanna leave this page the changes may lost.')) {
+        // canncel detortion of component
+        this.router.navigate(['/dashboard/profile']);
+      }
+    }
   }
 }

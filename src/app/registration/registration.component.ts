@@ -27,9 +27,7 @@ export class RegistrationComponent implements OnInit {
 
 
   ngOnInit() {
-    if (localStorage.getItem('authToken')) {
-      this.router.navigate(['/dashboard/home']);
-    }
+   
   }
 
   submitRegistrationForm() {

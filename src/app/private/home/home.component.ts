@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GuestUserService } from 'src/app/service/guest-user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +11,26 @@ export class HomeComponent implements OnInit {
   fullName: any;
   username: any;
   time: string;
+  apiList = ['Introduction', 'SetUp', 'Architecture', 'Cheat Sheet'];
+  selectedApi: any = 'Introduction';
 
-  constructor(private guestUserService: GuestUserService, private router: Router) { }
+  constructor(private guestUserService: GuestUserService) { }
 
   ngOnInit() {
+    this.getGreetingMessage();
+    this.getUserDetails();
+  }
 
+  getUserDetails() {
+    this.guestUserService.getData().subscribe(
+      (result) => {
+        this.fullName = result['data']['firstname'] + ' ' + result['data']['lastname'];
+        this.username = result['data']['username'];
+      }
+    );
+  }
+
+  getGreetingMessage() {
     const today = new Date();
     const curHr = today.getHours();
 
@@ -27,21 +41,15 @@ export class HomeComponent implements OnInit {
     } else {
       this.time = 'Evening';
     }
-
-
-    this.guestUserService.getData().subscribe(
-      (result) => {
-        console.log(result);
-        this.fullName = result['data']['firstname'] + ' ' + result['data']['lastname'];
-        this.username = result['data']['username'];
-      }
-    );
   }
 
-  logout() {
-    //debugger;
-    localStorage.clear();
-    this.router.navigate(['/login']);
+  listClick(event, newValue) {
+    this.selectedApi = newValue;
+  }
+
+  removeSelectedApi(event) {
+    this.apiList.splice(this.apiList.indexOf(event), 1);
+    this.selectedApi = 'Introduction';
   }
 
 }

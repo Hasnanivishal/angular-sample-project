@@ -6,17 +6,27 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatCardModule, MatMenuModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatMenuModule, MatIconModule, MatButtonModule,
+  MatDividerModule, MatListModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { HomePageListingComponent } from './home-page-listing/home-page-listing.component';
 
 @NgModule({
-  declarations: [HomeComponent, ProfileComponent, DashboardComponent],
+  declarations: [HomeComponent, ProfileComponent, DashboardComponent, HomePageListingComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     PrivateRoutingModule,
     MatMenuModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatProgressSpinnerModule
   ]
 })
 export class PrivateModule { }

@@ -1,0 +1,20 @@
+<div *ngIf="selectedApi == 'Introduction'">
+Introduction to Angular Link
+</div>
+
+<div *ngIf="selectedApi == 'SetUp'">
+    Setting up the Local Environment and Workspace
+    <button (click)="removeSelectedApi('SetUp')">Remove</button>
+</div>
+
+
+<div *ngIf="selectedApi == 'Architecture'">
+    Architecture overview
+    <button (click)="removeSelectedApi('Architecture')">Remove</button>
+</div>
+
+
+<div *ngIf="selectedApi == 'Cheat Sheet'">
+    Cheat Sheet
+    <button (click)="removeSelectedApi('Cheat Sheet')">Remove</button>
+</div>

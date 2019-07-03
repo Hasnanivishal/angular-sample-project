@@ -1,97 +1,73 @@
-<!-- Show Profile -->
+<div>
+  <mat-card class="text-center">
+    <mat-card-title>Profile Information
 
-<div class="container">
-  <!-- <div class="row">
-    <div class="col-sm-12" style="background-color: #e9ecef;">
-      <img width="75" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    </div>
-  </div> -->
+      <mat-card-actions *ngIf="!updateProfile" style="text-align: right">
+        <button mat-button (click)="updateProfile = !updateProfile">Edit</button>
+      </mat-card-actions>
+    </mat-card-title>
 
-  <form *ngIf="profileForm" [formGroup]="profileForm" (ngSubmit)="submitRegistrationForm()">
-    <div class="row">
+    <!-- View Profile -->
+    <mat-card-content *ngIf="profileForm && !updateProfile">
 
-      <div class="col-sm-5">
-
-        <div class="card border-primary mb-3 image">
-          <div class="card-body">
-            <div>
-              <img *ngIf="!imageURL" class="img-thumbnail" src="http://res.cloudinary.com/do4dvpz7j/raw/upload/v1561611809/kylicrial2tdyonhfw45"
-                alt="...">
-               <img *ngIf="imageURL" class="img-thumbnail" src="{{ imageURL }} "
-                alt="...">
-
-              <a *ngIf="updateProfile" id="change-picture" class="js-change-picture">Change picture
-                <input type="file" id="file"  (change)="handleFileInput($event.target.files)">
-              </a>
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-md-4" id="">
+          <img src="{{imageURL}}" alt="..." class=" img-thumbnail">
         </div>
-
+        <div class="col-md-8" id="">
+          <mat-list>
+            <mat-list-item>Name: {{profileForm.controls.firstName.value}}
+              {{profileForm.controls.lastName.value}}</mat-list-item>
+            <mat-divider *ngIf="profileForm && !updateProfile"></mat-divider>
+            <mat-list-item>UserName: {{profileForm.controls.username.value}}
+            </mat-list-item>
+          </mat-list>
+        </div>
       </div>
 
+    </mat-card-content>
 
-      <div class="col-sm-7">
-        <div class="card data">
-
-          <div class="card-body ">
-            <div class="row">
-              <span>Profile Information</span>
-              <i *ngIf="!updateProfile" class="fas fa-pencil-alt" (click)="updateProfileForm()"></i>
-            </div>
-
-
-            <div class="row" *ngIf="!updateProfile">
-              Name : {{profileForm.controls.firstName.value}} {{profileForm.controls.lastName.value}}
-            </div>
-
-            <div class="form-group" *ngIf="updateProfile">
-              <label>
-                First Name
-                <input type="text" class="form-control input-width" formControlName="firstName">
-                <div class="danger" *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors">
-                  <div *ngIf="profileForm.controls.firstName.errors.required">First Name is required</div>
-                  <div *ngIf="profileForm.controls.firstName.errors.pattern">First Name is incorrect</div>
-                </div>
-              </label>
-            </div>
-
-            <div class="form-group" *ngIf="updateProfile">
-              <label>
-                Last Name
-                <input type="text" class="form-control input-width" formControlName="lastName">
-                <div class="danger" *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors">
-                  <div *ngIf="profileForm.controls.lastName.errors.required">Last Name is required</div>
-                  <div *ngIf="profileForm.controls.lastName.errors.pattern">Last Name is incorrect</div>
-                </div>
-              </label>
-            </div>
-
-            <div class="row" *ngIf="!updateProfile">
-              UserName : {{profileForm.controls.username.value}}
-            </div>
-
-            <div class="form-group" *ngIf="updateProfile">
-              <label>
-                Email
-                <input type="text" class="form-control input-width" formControlName="username">
-                <div class="danger" *ngIf="profileForm.controls.username.touched  && profileForm.controls.username.errors">
-                  <div *ngIf="profileForm.controls.username.errors.required">Email is required</div>
-                  <div *ngIf="profileForm.controls.username.errors.email">Email is incorrect</div>
-                </div>
-              </label>
-            </div>
-
-          </div>
-
-          <div class="form-group" *ngIf="updateProfile">
-            <button class="btn btn-primary" type="submit">Update</button>
-            <button class="btn btn-primary" type="cancel" (click)="showProfile(); false">Cancel</button>
-          </div>
-
+    <!-- Edit Profile -->
+    <div *ngIf="profileForm && updateProfile">
+      <div class="row" style="margin-top: 50px !important;">
+        <div class="col-md-4" id="">
+          <img src="{{imageURL}}" alt="..." class="hoverable img-thumbnail">
+          <input #imageFile  type="file"  accept="image/*"  (change)="handleFileInput($event.target.files)">
         </div>
 
+        <div class="col-md-8" id="" class="text-left">
+          <form [formGroup]="profileForm" (ngSubmit)="submitRegistrationForm()">
+            <div class="form-group">
+              <mat-form-field class="input-width" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" id="" placeholder="Placeholder" formControlName="firstName">
+                <mat-error id="" *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors && profileForm.controls.firstName.errors.required">
+                  First Name is required </mat-error>
+                <mat-error *ngIf="profileForm.controls.firstName.touched  && profileForm.controls.firstName.errors && profileForm.controls.firstName.errors.pattern">
+                  First Name is incorrect </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
+              <mat-form-field class="input-width" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" id="" placeholder="Last Name" formControlName="lastName">
+                <mat-error id="" *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors && profileForm.controls.lastName.errors.required">
+                  Last Name is required </mat-error>
+                <mat-error *ngIf="profileForm.controls.lastName.touched  && profileForm.controls.lastName.errors && profileForm.controls.lastName.errors.pattern">
+                  Last Name is incorrect </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group text-center" >
+              <button mat-raised-button color="primary" type="submit">Update</button>
+              <button mat-raised-button color="warn" type="cancel" (click)="updateProfile = !updateProfile">Cancel</button>
+            </div>
+          </form>
+        </div>
       </div>
 
     </div>
-  </form>
+
+  </mat-card>
 </div>
