@@ -5,7 +5,6 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { GuestUserService } from './service/guest-user.service';
-import { of, BehaviorSubject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
 xdescribe('AppComponent', () => {
@@ -13,8 +12,6 @@ xdescribe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
     let service: GuestUserService;
     beforeEach(async(() => {
-
-
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
@@ -45,14 +42,14 @@ xdescribe('AppComponent', () => {
         expect(compiled.querySelector('router-outlet')).toBeTruthy();
     });
 
-    // it('should render loader if isLoading true', () => {
-    //     fixture.detectChanges();
-    //     spyOn(service, 'isLoading').and.returnValue(false);
-    //     const compiled = fixture.debugElement.nativeElement;
-    //     expect(service.isLoading).toBeTruthy();
-    //     expect(fixture.debugElement.query(By.css('.loader'))).toBeDefined();
-    //     // expect(compiled.querySelector('mat-spinner')).toBeTruthy();
-    // });
-
-
+    it('should render loader', () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.loader'))).toBeNull();
+        service.isLoading.next(true);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.loader'))).toBeDefined();
+        service.isLoading.next(false);
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.loader'))).toBeNull();
+    });
 });

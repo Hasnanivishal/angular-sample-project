@@ -8,7 +8,6 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    debugger;
     const token = localStorage.getItem('authToken');
     if (token) {
       request = request.clone({
@@ -17,7 +16,6 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       });
     }
-    console.log("Request is",request );
     return next.handle(request);
   }
 }

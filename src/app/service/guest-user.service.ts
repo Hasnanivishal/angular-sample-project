@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class GuestUserService {
 
-  public isLoading: any = new BehaviorSubject(false);
+  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) { }
 
