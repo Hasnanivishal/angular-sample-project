@@ -19,10 +19,10 @@
         </div>
     </div>
     <div class="col-md-9">
-        <app-home-page-listing [selectedApi]='selectedApi'></app-home-page-listing>
+        <app-home-page-listing [selectedApi]='selectedApi' (removeApi)="removeSelectedApi($event)"></app-home-page-listing>
     </div>
 
-</div>
+</div> 
 
 
 

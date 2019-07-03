@@ -47,4 +47,9 @@ export class HomeComponent implements OnInit {
     this.selectedApi = newValue;
   }
 
+  removeSelectedApi(event) {
+    this.apiList.splice(this.apiList.indexOf(event), 1);
+    this.selectedApi = 'Introduction';
+  }
+
 }

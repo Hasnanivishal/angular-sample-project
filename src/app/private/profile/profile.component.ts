@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit {
   }
 
   submitRegistrationForm() {
-    debugger;
     const formData: FormData = new FormData();
     formData.append('file', this.fileToUpload);
 
@@ -58,7 +57,6 @@ export class ProfileComponent implements OnInit {
     this.guestUserService.update(formData).subscribe(
       result => {
         if (result['result']) {
-          debugger;
           this.updateProfile = false;
 
         }
@@ -69,5 +67,15 @@ export class ProfileComponent implements OnInit {
       }
 
     );
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    if (this.updateProfile) {
+      if (!window.confirm('Are you sure you wanna leave this page the changes may lost.')) {
+        // canncel detortion of component
+        this.router.navigate(['/dashboard/profile']);
+      }
+    }
   }
 }

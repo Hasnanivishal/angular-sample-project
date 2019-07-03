@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-home-page-listing',
@@ -8,14 +8,21 @@ import { Component, OnInit, Input } from '@angular/core';
 export class HomePageListingComponent implements OnInit {
 
   @Input() selectedApi: any;
+
+  @Output() removeApi = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit() {
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
-  ngOnChanges() {
-    console.log("value is///", this.selectedApi);
+  // ngOnChanges() {
+  //   console.log("value is///", this.selectedApi);
+  // }
+
+  removeSelectedApi(api: string) {
+    this.removeApi.emit(api);
   }
 
 }
