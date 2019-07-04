@@ -4,18 +4,14 @@ import { RegistrationComponent } from './registration.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GuestUserService } from '../service/guest-user.service';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpResponse } from '@angular/common/http';
-import { JwtInterceptor } from '../service/jwt-interceptor.service';
-import { ErrorInterceptor } from '../service/error-interceptor.service';
-import { AppRoutingModule } from '../app-routing.module';
+import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
-import { APP_BASE_HREF } from '@angular/common';
 import { of, throwError } from 'rxjs';
-import { ErrorComponent } from '../error/error.component'; 
+import { ErrorComponent } from '../error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatMenuModule, MatProgressSpinnerModule } from '@angular/material';
 
-xdescribe('RegistrationComponent', () => {
+describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
   let guestUserService: any;
@@ -31,7 +27,6 @@ xdescribe('RegistrationComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientModule,
-        AppRoutingModule,
         BrowserAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -40,9 +35,6 @@ xdescribe('RegistrationComponent', () => {
         MatProgressSpinnerModule
       ],
       providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: APP_BASE_HREF, useValue: '/' },
         { provide: GuestUserService, useValue: guestUserService }]
     })
       .compileComponents();
@@ -148,22 +140,22 @@ xdescribe('RegistrationComponent', () => {
 
 
   it('should validate validateAllFields method', () => {
-     component.validateAllFields(component.profileForm);
+    component.validateAllFields(component.profileForm);
 
-     const firstName = component.profileForm.controls['firstName'];
-     expect(firstName.hasError('required')).toBeTruthy();
+    const firstName = component.profileForm.controls['firstName'];
+    expect(firstName.hasError('required')).toBeTruthy();
 
-     const lastName = component.profileForm.controls['lastName'];
-     expect(lastName.hasError('required')).toBeTruthy();
+    const lastName = component.profileForm.controls['lastName'];
+    expect(lastName.hasError('required')).toBeTruthy();
 
-     const username = component.profileForm.controls['username'];
-     expect(username.hasError('required')).toBeTruthy();
+    const username = component.profileForm.controls['username'];
+    expect(username.hasError('required')).toBeTruthy();
 
-     const password = component.profileForm.controls['password'];
-     expect(password.hasError('required')).toBeTruthy();
+    const password = component.profileForm.controls['password'];
+    expect(password.hasError('required')).toBeTruthy();
 
-     const confirmPassword = component.profileForm.controls['confirmPassword'];
-     expect(confirmPassword.hasError('required')).toBeTruthy();
+    const confirmPassword = component.profileForm.controls['confirmPassword'];
+    expect(confirmPassword.hasError('required')).toBeTruthy();
   });
 
 
@@ -190,7 +182,7 @@ xdescribe('RegistrationComponent', () => {
     expect(guestUserServiceSpy).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
-     })
+  })
   ));
 
   it('should UnSuccessfully Submit Registration Form', async(inject([Router], (router) => {
@@ -215,6 +207,6 @@ xdescribe('RegistrationComponent', () => {
     expect(guestUserServiceSpy).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/error']);
-    })
+  })
   ));
 });

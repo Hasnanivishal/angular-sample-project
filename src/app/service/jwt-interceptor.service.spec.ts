@@ -4,9 +4,8 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpResponse, HttpRequest } from '@angul
 import { JwtInterceptor } from './jwt-interceptor.service';
 import { of } from 'rxjs';
 
-xdescribe('JwtInterceptorService', () => {
+describe('JwtInterceptorService', () => {
 
-  // tslint:disable-next-line:prefer-const
   let jwtInterceptor: JwtInterceptor;
 
   beforeEach(() => {

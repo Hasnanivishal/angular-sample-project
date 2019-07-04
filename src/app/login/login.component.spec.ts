@@ -3,19 +3,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GuestUserService } from '../service/guest-user.service';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpResponse } from '@angular/common/http';
-import { JwtInterceptor } from '../service/jwt-interceptor.service';
-import { ErrorInterceptor } from '../service/error-interceptor.service';
-import { AppRoutingModule } from '../app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
-import { APP_BASE_HREF } from '@angular/common';
 import { of, throwError } from 'rxjs';
 import { ErrorComponent } from '../error/error.component';
 import { RegistrationComponent } from '../registration/registration.component';
 import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatMenuModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     let guestUserService: any;
@@ -32,7 +28,6 @@ xdescribe('LoginComponent', () => {
                 RouterTestingModule,
                 BrowserAnimationsModule,
                 HttpClientModule,
-                AppRoutingModule,
                 MatFormFieldModule,
                 MatInputModule,
                 MatButtonModule,
@@ -40,9 +35,6 @@ xdescribe('LoginComponent', () => {
                 MatProgressSpinnerModule
             ],
             providers: [
-                { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-                { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-                { provide: APP_BASE_HREF, useValue: '/' },
                 { provide: GuestUserService, useValue: guestUserService }]
         })
             .compileComponents();

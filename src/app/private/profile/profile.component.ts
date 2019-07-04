@@ -19,8 +19,12 @@ export class ProfileComponent implements OnInit {
   @ViewChild('imageFile', { static: false }) imageFile: ElementRef;
 
   ngOnInit() {
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
     this.guestUserService.getData().subscribe(
-      (result) => {
+      result => {
         this.profileForm = this.fb.group({
           firstName: [result['data']['firstname'], Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]+$')])],
           lastName: [result['data']['lastname'], Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z ]+$')])],
@@ -31,13 +35,14 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  handleFileInput(files: any) {
 
-  handleFileInput(files: FileList) {
     const selectedImagefile = files.item(0);
     // check for size should be less then 500kb and image type should be image
     if (selectedImagefile.size < 500000 && selectedImagefile.type.includes('image/')) {
       this.fileToUpload = selectedImagefile;
     } else {
+
       alert('Invalid File');
       this.imageFile.nativeElement.value = '';
     }
@@ -70,12 +75,12 @@ export class ProfileComponent implements OnInit {
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
-  ngOnDestroy() {
-    if (this.updateProfile) {
-      if (!window.confirm('Are you sure you wanna leave this page the changes may lost.')) {
-        // canncel detortion of component
-        this.router.navigate(['/dashboard/profile']);
-      }
-    }
-  }
+  // ngOnDestroy() {
+  //   if (this.updateProfile) {
+  //     if (!window.confirm('Are you sure you wanna leave this page the changes may lost.')) {
+  //       // canncel detortion of component
+  //       this.router.navigate(['/dashboard/profile']);
+  //     }
+  //   }
+  // }
 }

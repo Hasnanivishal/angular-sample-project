@@ -1,10 +1,7 @@
-import { TestBed, async, inject } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { AuthGuardService, UnAuthGuardService } from './auth-guard.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
-import { AppRoutingModule } from '../app-routing.module';
+import { Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,7 +10,7 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule, MatMenuModule, Mat
 import { ErrorComponent } from '../error/error.component';
 import { RegistrationComponent } from '../registration/registration.component';
 
-xdescribe('AuthGuardService', () => {
+describe('AuthGuardService', () => {
   let authGuardServiceService: AuthGuardService;
   const router = {
     navigate: jasmine.createSpy('navigate')
@@ -22,13 +19,12 @@ xdescribe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, ErrorComponent, RegistrationComponent],
-      imports: [AppRoutingModule,
+      imports: [
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        AppRoutingModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
@@ -65,7 +61,7 @@ xdescribe('AuthGuardService', () => {
 });
 
 
-xdescribe('UnAuthGuardService', () => {
+describe('UnAuthGuardService', () => {
   let unAuthGuardService: UnAuthGuardService;
   const router = {
     navigate: jasmine.createSpy('navigate')
@@ -74,13 +70,12 @@ xdescribe('UnAuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, ErrorComponent, RegistrationComponent],
-      imports: [AppRoutingModule,
+      imports: [
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        AppRoutingModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,

@@ -22,12 +22,12 @@ export class HomeComponent implements OnInit {
   }
 
   getUserDetails() {
-    this.guestUserService.getData().subscribe(
-      (result) => {
-        this.fullName = result['data']['firstname'] + ' ' + result['data']['lastname'];
-        this.username = result['data']['username'];
-      }
-    );
+    // this.guestUserService.getData().subscribe(
+    //   (result) => {
+    //     this.fullName = result['data']['firstname'] + ' ' + result['data']['lastname'];
+    //     this.username = result['data']['username'];
+    //   }
+    // );
   }
 
   getGreetingMessage() {

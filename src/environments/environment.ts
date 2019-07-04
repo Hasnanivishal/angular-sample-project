@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000/api/'
+  // baseUrl: 'http://localhost:3000/api/'
+  baseUrl: 'https://vishal-hasnani-node.herokuapp.com/api/'
 };
 
 /*

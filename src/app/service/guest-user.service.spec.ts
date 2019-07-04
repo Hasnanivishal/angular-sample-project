@@ -3,7 +3,7 @@ import { GuestUserService } from './guest-user.service';
 import { of } from 'rxjs';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
-xdescribe('GuestUserService', () => {
+describe('GuestUserService', () => {
 
     let service: GuestUserService;
     let httpMock: HttpTestingController;

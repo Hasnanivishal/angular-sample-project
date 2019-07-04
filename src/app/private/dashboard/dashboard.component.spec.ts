@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, fakeAsync } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { Router } from '@angular/router';
@@ -19,6 +19,8 @@ import { HomeComponent } from '../home/home.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { HomePageListingComponent } from '../home-page-listing/home-page-listing.component';
 import { By } from '@angular/platform-browser';
+import { NgModuleFactoryLoader } from '@angular/core';
+import { PrivateModule } from '../private.module';
 
 
 xdescribe('DashboardComponent', () => {
@@ -81,12 +83,28 @@ xdescribe('DashboardComponent', () => {
   // })
   // ));
 
-  // it('should navigate to home page if clicked home navigation', () => {
+  it('should navigate to home page if clicked home navigation', fakeAsync(() => {
+    const router = TestBed.get(Router);
+    const location = TestBed.get(Location);
 
-  // });
+    router.initialNavigation();
+
+    const loader = TestBed.get(NgModuleFactoryLoader);
+    loader.stubbedModules = {lazyModule: PrivateModule};
+
+    router.resetConfig([
+      {path: 'dashboard', loadChildren: 'lazyModule'},
+    ]);
+
+    const profileLink = fixture.debugElement.query(By.css('.profile')).nativeElement;
+    expect(profileLink.text).toEqual('Profile');
+    expect(profileLink.pathname).toEqual('/dashboard/profile');
+    profileLink.click();
+
+  }));
 
 
-  it('should Successfully logout', async(inject([Router], (router) => {
+  xit('should Successfully logout', async(inject([Router], (router) => {
     spyOn(router, 'navigate');
     spyOn(component, 'logout').and.callThrough();
     expect(localStorage.getItem('authToken')).toEqual('1@3$5^7*9)');

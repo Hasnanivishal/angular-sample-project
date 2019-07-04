@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GuestUserService } from './service/guest-user.service';
 import { By } from '@angular/platform-browser';
 
-xdescribe('AppComponent', () => {
+describe('AppComponent', () => {
     let component: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
     let service: GuestUserService;
