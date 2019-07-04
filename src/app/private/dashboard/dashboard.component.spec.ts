@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ import { NgModuleFactoryLoader } from '@angular/core';
 import { PrivateModule } from '../private.module';
 
 
-xdescribe('DashboardComponent', () => {
+fdescribe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
@@ -36,7 +36,6 @@ xdescribe('DashboardComponent', () => {
         AppRoutingModule,
         CommonModule,
         ReactiveFormsModule,
-        PrivateRoutingModule,
         MatMenuModule,
         MatIconModule,
         MatCardModule,
@@ -84,22 +83,28 @@ xdescribe('DashboardComponent', () => {
   // ));
 
   it('should navigate to home page if clicked home navigation', fakeAsync(() => {
+    debugger;
     const router = TestBed.get(Router);
     const location = TestBed.get(Location);
 
     router.initialNavigation();
 
     const loader = TestBed.get(NgModuleFactoryLoader);
-    loader.stubbedModules = {lazyModule: PrivateModule};
+    loader.stubbedModules = { lazyModule: PrivateModule };
 
     router.resetConfig([
-      {path: 'dashboard', loadChildren: 'lazyModule'},
+      { path: 'dashboard', loadChildren: 'lazyModule' },
     ]);
 
     const profileLink = fixture.debugElement.query(By.css('.profile')).nativeElement;
     expect(profileLink.text).toEqual('Profile');
     expect(profileLink.pathname).toEqual('/dashboard/profile');
     profileLink.click();
+
+    tick();
+    fixture.detectChanges();
+
+    expect(location.path()).toBe('/dashboard/profile');
 
   }));
 
