@@ -36,7 +36,6 @@ export class ProfileComponent implements OnInit {
   }
 
   handleFileInput(files: any) {
-
     const selectedImagefile = files.item(0);
     // check for size should be less then 500kb and image type should be image
     if (selectedImagefile.size < 500000 && selectedImagefile.type.includes('image/')) {

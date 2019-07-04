@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomePageListingComponent } from './home-page-listing.component';
 
-xdescribe('HomePageListingComponent', () => {
+describe('HomePageListingComponent', () => {
   let component: HomePageListingComponent;
   let fixture: ComponentFixture<HomePageListingComponent>;
 

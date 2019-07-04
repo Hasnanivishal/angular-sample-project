@@ -32,7 +32,7 @@
       <div class="row" style="margin-top: 50px !important;">
         <div class="col-md-4" id="">
           <img src="{{imageURL}}" alt="..." class="hoverable img-thumbnail">
-          <input #imageFile  type="file"  accept="image/*"  (change)="handleFileInput($event.target.files)">
+          <input #imageFile  type="file"  accept="image/*"  class="inputFile" (change)="handleFileInput($event.target.files)">
         </div>
 
         <div class="col-md-8" id="" class="text-left">

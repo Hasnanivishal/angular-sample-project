@@ -16,11 +16,6 @@ export class HomePageListingComponent implements OnInit {
   ngOnInit() {
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
-  // ngOnChanges() {
-  //   console.log("value is///", this.selectedApi);
-  // }
-
   removeSelectedApi(api: string) {
     this.removeApi.emit(api);
   }

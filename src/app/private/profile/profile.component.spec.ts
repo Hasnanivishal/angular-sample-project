@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrivateRoutingModule } from '../private-routing.module';
 import {
@@ -20,16 +20,17 @@ import { ErrorComponent } from 'src/app/error/error.component';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ElementRef } from '@angular/core';
 
-xdescribe('ProfileComponent', () => {
+describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let guestUserService: any;
   let guestUserServiceSpy: any;
 
   beforeEach(async(() => {
-    guestUserService = jasmine.createSpyObj('GuestUserService', ['getData']);
+    guestUserService = jasmine.createSpyObj('GuestUserService', ['getData', 'update']);
 
     TestBed.configureTestingModule({
       declarations: [HomeComponent, ProfileComponent, DashboardComponent, HomePageListingComponent,
@@ -53,7 +54,8 @@ xdescribe('ProfileComponent', () => {
         MatMenuModule,
         MatProgressSpinnerModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule
       ],
       providers: [
 
@@ -116,33 +118,63 @@ xdescribe('ProfileComponent', () => {
 
   });
 
+  it('should update user profile', () => {
+    component.updateProfile = true;
+    const file = {
+      name: 'test.png',
+      size: 30000,
+      type: 'image/png'
+    };
 
-  // it('should show alert if incorrect file uploaded', () => {
-  //   const file = {
-  //     name: 'test.png',
-  //     size: 1130000,
-  //     type: 'image/png'
-  //   };
+    const fileList = {
+      0: file,
+      length: 1,
+      item: function (index) { return file; }
+    };
 
-  //   const fileList = {
-  //     0: file,
-  //     length: 1,
-  //     item: function (index) { return file; }
-  //   };
+    fixture.detectChanges();
+    component.fileToUpload = <File>fileList.item(0);
+    component.profileForm.controls['firstName'].setValue('Vishal');
+    component.profileForm.controls['lastName'].setValue('Hasnani');
+
+    guestUserServiceSpy = guestUserService.update.and.returnValue(of({
+      result: { message: 'Updated Succesfully!!!' }
+    }));
+
+    component.submitRegistrationForm();
+
+    fixture.detectChanges();
+    expect(component.updateProfile).toBeFalsy();
+    fixture.detectChanges();
+
+  });
 
 
-  //   fixture.detectChanges();
-  //   // const imageFile: ElementRef = fixture.componentInstance.imageFile;
-  //   // expect(imageFile).toBeDefined();
-  //   // component.imageFile = imageFile;
+  it('should show alert if incorrect file uploaded', () => {
+    component.updateProfile = true;
+    const file = {
+      name: 'test.png',
+      size: 90000,
+      type: 'svg+xml/png'
+    };
 
-  //   fixture.detectChanges();
-  //   expect(component.fileToUpload).toBeNull();
-  //   component.handleFileInput(fileList);
-  //   fixture.detectChanges();
-  //   expect(window.alert).toHaveBeenCalledWith('Invalid File');
-  //   expect(component.fileToUpload).toBeNull();
+    const fileList = {
+      0: file,
+      length: 1,
+      item: function (index) { return file; }
+    };
 
-  // });
+     fixture.detectChanges();
+     spyOn(window, 'alert');
+      const imageFile = fixture.debugElement.query(By.css('.inputFile'));
+      component.imageFile = imageFile;
+
+      fixture.detectChanges();
+      expect(component.fileToUpload).toBeNull();
+      component.handleFileInput(fileList);
+      fixture.detectChanges();
+      expect(window.alert).toHaveBeenCalledWith('Invalid File');
+      expect(component.fileToUpload).toBeNull();
+  });
 
 });
