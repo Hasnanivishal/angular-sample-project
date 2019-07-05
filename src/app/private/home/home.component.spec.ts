@@ -5,8 +5,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
-describe('HomeComponent', () => {
+fdescribe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     let guestUserService: any;
@@ -41,6 +42,16 @@ describe('HomeComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should contain child component home-page-list', () => {
+        const compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('app-home-page-listing')).toBeTruthy();
+    });
+
+    it('should render child component data if input value is passed', () => {
+        component.selectedApi = 'Introduction';
+    });
+
+
     it('should get user data and create profile form when getUserDetails called', () => {
         expect(component.username).toBeUndefined();
         expect(component.fullName).toBeUndefined();
@@ -58,7 +69,7 @@ describe('HomeComponent', () => {
 
     it('should show correct greeting message by current time', () => {
         jasmine.clock().install();
-        var baseTime = new Date(2019, 9, 23, 10, 59, 59);
+        const baseTime = new Date(2019, 9, 23, 10, 59, 59);
         jasmine.clock().mockDate(baseTime);
         fixture.detectChanges();
 
@@ -67,6 +78,35 @@ describe('HomeComponent', () => {
         expect(component.time).toEqual('Morning');
     });
 
+    it('should render thr list of items present in apiList', () => {
+        component.apiList = ['A', 'B', 'C', 'D'];
+        fixture.detectChanges();
+        const buttonA = fixture.debugElement.query(By.css('.list-group-item-action0'));
+        expect(buttonA).toBeDefined();
+        expect(buttonA.nativeElement.textContent).toEqual('A ');
+    });
+
+    it('should render active class on the selected item from list', () => {
+        component.apiList = ['ABC', 'DEF', 'GHI', 'JKL'];
+        component.selectedApi = 'GHI';
+        fixture.detectChanges();
+        const buttonA = fixture.debugElement.query(By.css('.list-group-item-action2'));
+        expect(buttonA).toBeDefined();
+        expect(buttonA.nativeElement.classList).toContain('active');
+    });
+
+    it('should set the selectedAPI value when listClicked function is called', () => {
+        component.apiList = ['ABC', 'DEF', 'GHI', 'JKL'];
+        component.listClick(null, 'JKL');
+        expect(component.selectedApi).toEqual('JKL');
+    });
+
+    it('should remove the selectedAPI from List when removeSelectedApi function is called', () => {
+        component.apiList = ['Introduction', 'DEF', 'GHI', 'JKL'];
+        component.removeSelectedApi('GHI');
+        expect(component.apiList).not.toContain('GHI');
+        expect(component.selectedApi).toEqual('Introduction');
+    });
 
     afterEach(function () {
         jasmine.clock().uninstall();

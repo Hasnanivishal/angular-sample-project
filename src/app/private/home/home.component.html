@@ -9,20 +9,19 @@
         </div>
     </div>
 </div>
-<div class="row w-75 p-3"> 
+<div class="row w-75 p-3">
     <div class="col-md-3">
         <div class="list-group">
-            <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': selectedApi == api}" 
-            (click)="listClick($event, api)"
-            *ngFor='let api of apiList;let i = index'>{{api}} </button>
-           
+            <button type="button" class="list-group-item list-group-item-action{{i}}" [ngClass]="{'active': selectedApi == api}"
+                (click)="listClick($event, api)" *ngFor='let api of apiList;let i = index'>{{api}} </button>
+
         </div>
     </div>
     <div class="col-md-9">
         <app-home-page-listing [selectedApi]='selectedApi' (removeApi)="removeSelectedApi($event)"></app-home-page-listing>
     </div>
 
-</div> 
+</div>
 
 
 

@@ -1,10 +1,10 @@
-<div *ngIf="selectedApi == 'Introduction'">
+<div *ngIf="selectedApi == 'Introduction'" class="{{selectedApi}}">
 Introduction to Angular Link
 </div>
 
 <div *ngIf="selectedApi == 'SetUp'">
     Setting up the Local Environment and Workspace
-    <button (click)="removeSelectedApi('SetUp')">Remove</button>
+    <button class="button{{selectedApi}}" (click)="removeSelectedApi('SetUp')">Remove</button>
 </div>
 
 
@@ -17,4 +17,4 @@ Introduction to Angular Link
 <div *ngIf="selectedApi == 'Cheat Sheet'">
     Cheat Sheet
     <button (click)="removeSelectedApi('Cheat Sheet')">Remove</button>
-</div>
+</div> 
