@@ -2,7 +2,7 @@ import { browser, by, element } from 'protractor';
 
 export class RegistrationPage {
   navigateTo() {
-    return browser.get('/');
+    return browser.get('/register');
   }
 
   getTitleText() {
@@ -20,7 +20,7 @@ export class RegistrationPage {
   getFormFieldError(fieldErrorId: string) {
     return element(by.id(fieldErrorId));
   }
-
+ 
   getLoginLink() {
     return element(by.id('loginLink'));
   }
