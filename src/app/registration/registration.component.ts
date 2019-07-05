@@ -74,26 +74,27 @@ export class RegistrationComponent implements OnInit {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFields(control);
       }
+      // else if (control instanceof FormGroup) {
+      //   this.validateAllFields(control);
+      // }
     });
   }
 
 
-  createItem(): FormGroup {
-    return this.fb.group({
-      phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
-    });
-  }
+  // createItem(): FormGroup {
+  //   return this.fb.group({
+  //     phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
+  //   });
+  // }
 
-  addItem(): void {
-    this.phoneNumbers = this.profileForm.get('phoneNumbers') as FormArray;
-    this.phoneNumbers.push(this.createItem());
-  }
+  // addItem(): void {
+  //   this.phoneNumbers = this.profileForm.get('phoneNumbers') as FormArray;
+  //   this.phoneNumbers.push(this.createItem());
+  // }
 
-  removeItem(index): void {
-    this.phoneNumbers = this.profileForm.get('phoneNumbers') as FormArray;
-    this.phoneNumbers.removeAt(index);
-  }
+  // removeItem(index): void {
+  //   this.phoneNumbers = this.profileForm.get('phoneNumbers') as FormArray;
+  //   this.phoneNumbers.removeAt(index);
+  // }
 }

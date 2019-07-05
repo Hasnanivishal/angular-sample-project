@@ -48,9 +48,10 @@ export class LoginComponent implements OnInit {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
-        this.validateAllFields(control);
       }
+      // else if (control instanceof FormGroup) {
+      //   this.validateAllFields(control);
+      // }
     });
   }
 }

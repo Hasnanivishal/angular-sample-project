@@ -10,7 +10,6 @@ import { ErrorComponent } from 'src/app/error/error.component';
 import { RegistrationComponent } from 'src/app/registration/registration.component';
 import { Location, CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PrivateRoutingModule } from '../private-routing.module';
 import {
   MatMenuModule, MatIconModule, MatCardModule, MatButtonModule, MatDividerModule,
   MatListModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
@@ -19,12 +18,12 @@ import { HomeComponent } from '../home/home.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { HomePageListingComponent } from '../home-page-listing/home-page-listing.component';
 import { By } from '@angular/platform-browser';
-import { NgModuleFactoryLoader } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-class PrivateModule { }
-
-xdescribe('DashboardComponent', () => {
+describe('DashboardComponent', () => {
+  let location: Location;
+  let router: Router;
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
@@ -33,7 +32,11 @@ xdescribe('DashboardComponent', () => {
       declarations: [DashboardComponent, LoginComponent, ErrorComponent, RegistrationComponent, HomeComponent, ProfileComponent,
         HomePageListingComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'dashboard/profile', component: ProfileComponent },
+          { path: 'dashboard/home', component: HomeComponent },
+          { path: 'login', component: LoginComponent },
+        ]),
         ReactiveFormsModule,
         MatMenuModule,
         MatIconModule,
@@ -45,13 +48,19 @@ xdescribe('DashboardComponent', () => {
         MatInputModule,
         MatButtonModule,
         MatMenuModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        HttpClientModule,
+        BrowserAnimationsModule
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+
+    router = TestBed.get(Router);
+    location = TestBed.get(Location);
+
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -68,55 +77,40 @@ xdescribe('DashboardComponent', () => {
   });
 
 
-  // tslint:disable-next-line:max-line-length
-  // it('should navigate to profile page if clicked profile navigation', async(inject([Router, Location], (router: Router, location: Location) => {
-  //   spyOn(router, 'navigate');
-  //   fixture.detectChanges();
-  //   fixture.debugElement.query(By.css('.home')).nativeElement.click();
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     expect(location.path()).toEqual('');
-  //   });
-
-  // })
-  // ));
-
-  it('should navigate to home page if clicked home navigation', fakeAsync(() => {
-    debugger;
-    const router = TestBed.get(Router);
-    const location = TestBed.get(Location);
-
-    router.initialNavigation();
-
-    const loader = TestBed.get(NgModuleFactoryLoader);
-    loader.stubbedModules = { lazyModule: PrivateModule };
-
-    router.resetConfig([
-      { path: 'dashboard', loadChildren: 'lazyModule' },
-    ]);
-
+  it('should navigate to profile page if clicked profile navigation', fakeAsync(() => {
     const profileLink = fixture.debugElement.query(By.css('.profile')).nativeElement;
     expect(profileLink.text).toEqual('Profile');
     expect(profileLink.pathname).toEqual('/dashboard/profile');
     profileLink.click();
-
     tick();
-    fixture.detectChanges();
-
     expect(location.path()).toBe('/dashboard/profile');
+  }
+  ));
 
-  }));
+  it('should navigate to home page if clicked home navigation', fakeAsync(() => {
+    const homeLink = fixture.debugElement.query(By.css('.home')).nativeElement;
+    expect(homeLink.text).toEqual('Home');
+    expect(homeLink.pathname).toEqual('/dashboard/home');
+    homeLink.click();
+    tick();
+    expect(location.path()).toBe('/dashboard/home');
+  }
+  ));
+
+  it('should contain logout button', () => {
+    const logoutLink = fixture.debugElement.query(By.css('.logout')).nativeElement;
+    expect(logoutLink.text).toEqual('Logout');
+  });
 
 
-  xit('should Successfully logout', async(inject([Router], (router) => {
-    spyOn(router, 'navigate');
+  it('should Successfully logout', fakeAsync(() => {
     spyOn(component, 'logout').and.callThrough();
     expect(localStorage.getItem('authToken')).toEqual('1@3$5^7*9)');
     component.logout();
+    tick();
     expect(localStorage.length).toEqual(0);
     expect(component.logout).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-  })
-  ));
+    expect(location.path()).toBe('/login');
+    fixture.detectChanges();
+  }));
 });

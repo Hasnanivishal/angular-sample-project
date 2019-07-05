@@ -1,9 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PrivateRoutingModule } from '../private-routing.module';
 import {
   MatMenuModule, MatIconModule, MatCardModule, MatButtonModule,
   MatDividerModule, MatListModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
@@ -18,16 +16,18 @@ import { RegistrationComponent } from 'src/app/registration/registration.compone
 import { LoginComponent } from 'src/app/login/login.component';
 import { ErrorComponent } from 'src/app/error/error.component';
 import { GuestUserService } from 'src/app/service/guest-user.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ElementRef } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let guestUserService: any;
   let guestUserServiceSpy: any;
+  let location: Location;
 
   beforeEach(async(() => {
     guestUserService = jasmine.createSpyObj('GuestUserService', ['getData', 'update']);
@@ -39,9 +39,11 @@ describe('ProfileComponent', () => {
         LoginComponent,
         ErrorComponent],
       imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'error', component: ErrorComponent },
+        ]),
         CommonModule,
         ReactiveFormsModule,
-        PrivateRoutingModule,
         MatMenuModule,
         MatIconModule,
         MatCardModule,
@@ -65,6 +67,7 @@ describe('ProfileComponent', () => {
   }));
 
   beforeEach(() => {
+    location = TestBed.get(Location);
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
 
@@ -149,6 +152,29 @@ describe('ProfileComponent', () => {
 
   });
 
+  it('should redirect to error page if error occured in updating user profile', fakeAsync(() => {
+    component.updateProfile = true;
+    const fileList = {
+      0: null,
+      length: 1,
+      item: function (index) { return null; }
+    };
+
+    fixture.detectChanges();
+    component.fileToUpload = <File>fileList.item(0);
+    component.profileForm.controls['firstName'].setValue('');
+    component.profileForm.controls['lastName'].setValue('');
+
+    guestUserServiceSpy = guestUserService.update.and.returnValue(throwError(new Error('Some Error occured!')));
+
+    component.submitRegistrationForm();
+
+    tick();
+    expect(location.path()).toBe('/error');
+    fixture.detectChanges();
+
+  }));
+
 
   it('should show alert if incorrect file uploaded', () => {
     component.updateProfile = true;
@@ -164,17 +190,17 @@ describe('ProfileComponent', () => {
       item: function (index) { return file; }
     };
 
-     fixture.detectChanges();
-     spyOn(window, 'alert');
-      const imageFile = fixture.debugElement.query(By.css('.inputFile'));
-      component.imageFile = imageFile;
+    fixture.detectChanges();
+    spyOn(window, 'alert');
+    const imageFile = fixture.debugElement.query(By.css('.inputFile'));
+    component.imageFile = imageFile;
 
-      fixture.detectChanges();
-      expect(component.fileToUpload).toBeNull();
-      component.handleFileInput(fileList);
-      fixture.detectChanges();
-      expect(window.alert).toHaveBeenCalledWith('Invalid File');
-      expect(component.fileToUpload).toBeNull();
+    fixture.detectChanges();
+    expect(component.fileToUpload).toBeNull();
+    component.handleFileInput(fileList);
+    fixture.detectChanges();
+    expect(window.alert).toHaveBeenCalledWith('Invalid File');
+    expect(component.fileToUpload).toBeNull();
   });
 
 });

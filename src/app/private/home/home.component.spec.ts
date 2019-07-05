@@ -6,8 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { HomePageListingComponent } from '../home-page-listing/home-page-listing.component';
+import { MockComponent } from 'ng-mocks';
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     let guestUserService: any;
@@ -17,7 +19,7 @@ fdescribe('HomeComponent', () => {
         guestUserService = jasmine.createSpyObj('GuestUserService', ['getData']);
 
         TestBed.configureTestingModule({
-            declarations: [HomeComponent],
+            declarations: [HomeComponent, MockComponent(HomePageListingComponent)],
             imports: [
                 HttpClientModule
             ],
@@ -47,8 +49,18 @@ fdescribe('HomeComponent', () => {
         expect(compiled.querySelector('app-home-page-listing')).toBeTruthy();
     });
 
-    it('should render child component data if input value is passed', () => {
-        component.selectedApi = 'Introduction';
+    it('should send/recive data to child component using @Input/@Output', () => {
+        component.selectedApi = 'SetUp';
+        fixture.detectChanges();
+        const element = fixture.debugElement.query(By.css('app-home-page-listing'));
+        expect(element).toBeTruthy();
+        const child: HomePageListingComponent = element.componentInstance;
+        expect(child.selectedApi).toBe('SetUp');
+
+        child.removeApi.emit('Architecture');
+        expect(component.apiList).not.toContain('Architecture');
+        expect(component.selectedApi).toEqual('Introduction');
+        fixture.detectChanges();
     });
 
 
@@ -69,13 +81,24 @@ fdescribe('HomeComponent', () => {
 
     it('should show correct greeting message by current time', () => {
         jasmine.clock().install();
-        const baseTime = new Date(2019, 9, 23, 10, 59, 59);
+        let baseTime = new Date(2019, 9, 23, 11, 59, 59);
         jasmine.clock().mockDate(baseTime);
         fixture.detectChanges();
-
         component.getGreetingMessage();
-
         expect(component.time).toEqual('Morning');
+
+        baseTime = new Date(2019, 9, 23, 17, 59, 59);
+        jasmine.clock().mockDate(baseTime);
+        fixture.detectChanges();
+        component.getGreetingMessage();
+        expect(component.time).toEqual('Afternoon');
+
+
+        baseTime = new Date(2019, 9, 23, 19, 59, 59);
+        jasmine.clock().mockDate(baseTime);
+        fixture.detectChanges();
+        component.getGreetingMessage();
+        expect(component.time).toEqual('Evening');
     });
 
     it('should render thr list of items present in apiList', () => {
