@@ -1,27 +1,46 @@
-# Sample
+## Introduction
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+This project was created to learn Angular 8 with all the advanced features.
+The Live [Demo](https://vishal-hasnani.herokuapp.com/) of this project.
 
-## Development server
+### Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Registration
+- Login 
+- Dashboard 
+- Home
+- Profile
 
-## Code scaffolding
+### Running unit tests
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The Project is having well defiend unit test case for each and every component/service file.
+To execute the unit tests via [Karma](https://karma-runner.github.io) please use command 
+```sh
+ng test
+```
 
-## Build
+### Running end-to-end tests
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+This Project having integration test case to test end to end flow and communication between component and sevices
+i.e The actual behavior of application with automated test case.
+To execute the end-to-end tests via [Protractor](http://www.protractortest.org/) please use command
+```sh
+ng e2e
+```
 
-## Running unit tests
+### Further help
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Conatct me for any suggestion/issues -> hasnanivishal@gmail.com
 
-## Running end-to-end tests
+License
+----
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+MIT
 
-## Further help
+### Author
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+> *Vishal Hasnani*
+> [NPM](https://www.npmjs.com/~hasnanivishal)
+> [StackOverflow](https://stackoverflow.com/users/9309209/vishal-hasnani?tab=profile)
+
+
