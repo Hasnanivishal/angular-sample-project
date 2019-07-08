@@ -1,4 +1,3 @@
-<!-- main app container -->
 <div class="jumbotron">
     <div class="container">
         <div class="row">
@@ -9,26 +8,25 @@
         </div>
     </div>
 </div>
+
+
+<!-- Parent child component example -->
 <div class="row w-75 p-3">
     <div class="col-md-3">
         <div class="list-group">
             <button type="button" class="list-group-item list-group-item-action{{i}}" [ngClass]="{'active': selectedApi == api}"
                 (click)="listClick($event, api)" *ngFor='let api of apiList;let i = index'>{{api}} </button>
-
         </div>
     </div>
     <div class="col-md-9">
         <app-home-page-listing [selectedApi]='selectedApi' (removeApi)="removeSelectedApi($event)"></app-home-page-listing>
     </div>
+</div>
+<!-- Parent child component example -->
 
+<!-- Dynamic Component -->
+<div class="text-center">
+    <ng-template app-dynamic-Component></ng-template>
 </div>
 
-
-
-
-
-<!-- Open api list 
-
-click on it the respecitve method will be called in another component
-
-there will be remove button to remove item from list -->
+<!-- Dynamic Component -->

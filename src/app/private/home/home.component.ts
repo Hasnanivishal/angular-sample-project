@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { GuestUserService } from 'src/app/service/guest-user.service';
+import { DynamicComponentDirective } from 'src/app/directives/dynamic-component.directive';
+import { ErrorComponent } from 'src/app/error/error.component';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +15,23 @@ export class HomeComponent implements OnInit {
   time: string;
   apiList = ['Introduction', 'SetUp', 'Architecture', 'Cheat Sheet'];
   selectedApi: any = 'Introduction';
+  @ViewChild(DynamicComponentDirective, { static: true }) dynamicComponentDirective: DynamicComponentDirective;
 
-  constructor(private guestUserService: GuestUserService) { }
+  constructor(private guestUserService: GuestUserService, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
+
     this.getGreetingMessage();
     this.getUserDetails();
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DynamicComponent);
+
+    const viewContainerRef = this.dynamicComponentDirective.viewContainerRef;
+    viewContainerRef.clear();
+
+    const componentRef = viewContainerRef.createComponent(componentFactory);
   }
+
 
   getUserDetails() {
     this.guestUserService.getData().subscribe(
@@ -50,6 +62,19 @@ export class HomeComponent implements OnInit {
   removeSelectedApi(event) {
     this.apiList.splice(this.apiList.indexOf(event), 1);
     this.selectedApi = 'Introduction';
+  }
+
+}
+
+
+@Component({
+  selector: 'app-dynamic-component',
+  template: '<h6>Dynamic Component</h6>'
+})
+export class DynamicComponent {
+
+  constructor() {
+
   }
 
 }
