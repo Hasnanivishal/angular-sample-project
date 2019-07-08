@@ -11,6 +11,7 @@ import { ErrorInterceptor } from './service/error-interceptor.service';
 import { ErrorComponent } from './error/error.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { CcMarkDownDirective } from './directives/cc-mark-down.directive';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButton
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    ErrorComponent
+    ErrorComponent,
+    CcMarkDownDirective
   ],
   imports: [
     BrowserModule,
