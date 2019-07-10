@@ -30,4 +30,8 @@ export class GuestUserService {
   update(Client: any) {
     return this.http.post(this.baseUrl + 'userInfo/update', Client);
   }
+
+  dynamicSampleData() {
+    return this.http.get('assets/sampledata.json');
+  }
 }

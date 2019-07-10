@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, Input } from '@angular/core';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { DynamicComponentDirective } from 'src/app/directives/dynamic-component.directive';
 import { ErrorComponent } from 'src/app/error/error.component';
@@ -17,19 +17,41 @@ export class HomeComponent implements OnInit {
   selectedApi: any = 'Introduction';
   @ViewChild(DynamicComponentDirective, { static: true }) dynamicComponentDirective: DynamicComponentDirective;
 
+  currentAdIndex = -1;
+  interval: any;
+  usersData: any;
+
   constructor(private guestUserService: GuestUserService, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-
     this.getGreetingMessage();
     this.getUserDetails();
 
+    this.guestUserService.dynamicSampleData().subscribe(
+      result => {
+        this.usersData = result;
+        this.loadComponent();
+        this.getAds();
+      }
+    );
+  }
+
+  getAds() {
+    this.interval = setInterval(() => {
+      this.loadComponent();
+    }, 10000);
+  }
+
+  loadComponent() {
+    this.currentAdIndex = Math.floor(Math.random() * (this.usersData['length'] - 1 + 1));
+    const userData = this.usersData[this.currentAdIndex];
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DynamicComponent);
 
     const viewContainerRef = this.dynamicComponentDirective.viewContainerRef;
     viewContainerRef.clear();
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
+    (<DynamicComponent>componentRef.instance).data = userData;
   }
 
 
@@ -64,15 +86,28 @@ export class HomeComponent implements OnInit {
     this.selectedApi = 'Introduction';
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
+
 }
 
 
 @Component({
   selector: 'app-dynamic-component',
-  template: '<h6>Dynamic Component</h6>'
+  template: `
+  <div class="job-ad">
+    <h3>Top Users</h3>
+    <h4>{{data?.name}}</h4>
+    <p>({{data?.position}} / {{data.office}})</p>
+  </div>
+`,
+  styleUrls: ['./home.component.css']
 })
 export class DynamicComponent {
 
+  @Input() data: any;
   constructor() {
 
   }

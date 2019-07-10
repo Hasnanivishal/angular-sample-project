@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // tslint:disable-next-line:no-debugger
-    debugger;
+    // debugger;
     if (localStorage.getItem('authToken')) {
       // logged in so return true
       return true;
