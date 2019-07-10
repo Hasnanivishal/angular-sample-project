@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { GuestUserService } from 'src/app/service/guest-user.service';
-import { Router } from '@angular/router';
+import { Router, CanDeactivate } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -72,14 +72,22 @@ export class ProfileComponent implements OnInit {
 
     );
   }
+}
 
-  // tslint:disable-next-line:use-life-cycle-interface
-  // ngOnDestroy() {
-  //   if (this.updateProfile) {
-  //     if (!window.confirm('Are you sure you wanna leave this page the changes may lost.')) {
-  //       // canncel detortion of component
-  //       this.router.navigate(['/dashboard/profile']);
-  //     }
-  //   }
-  // }
+
+
+@Injectable({
+    providedIn: 'root',
+})
+export class CanDeactivateGuard implements CanDeactivate<ProfileComponent> {
+  canDeactivate(component: ProfileComponent): boolean {
+    if (component.updateProfile) {
+      if (confirm('You have unsaved changes! If you leave, your changes will be lost.')) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 }
