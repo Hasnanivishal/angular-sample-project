@@ -14,6 +14,11 @@ import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButton
 import { CcMarkDownDirective } from './directives/cc-mark-down.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BlogComponent } from './blogs/blog/blog.component';
+import { BlogHomeComponent } from './blogs/blog-home/blog-home.component';
+import { AboutComponent } from './blogs/about/about.component';
+import { ContactComponent } from './blogs/contact/contact.component';
+
 
 
 @NgModule({
@@ -22,7 +27,11 @@ import { environment } from '../environments/environment';
     RegistrationComponent,
     LoginComponent,
     ErrorComponent,
-    CcMarkDownDirective
+    CcMarkDownDirective,
+    BlogComponent,
+    BlogHomeComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

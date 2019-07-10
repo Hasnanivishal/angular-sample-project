@@ -1,9 +1,18 @@
-<div style="text-align: center; background-color: #e9ecef;">
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="login-wrap">
+          <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked />
+            <label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="for-pwd" /><label for="tab-2" class="tab"></label>
+            <div class="login-form">
 
-  <img width="75" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-  <form [formGroup]="loginForm" (ngSubmit)="submitRegistrationForm()">
-    <div class="form-group">
-      <!-- <label>
+              <div class="sign-in-htm">
+                <form [formGroup]="loginForm" (ngSubmit)="submitRegistrationForm()">
+                  <div class="form-group">
+                    <!-- <label>
           Email
           <input type="text" class="form-control" formControlName="username">
           <div class="danger" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors">
@@ -13,35 +22,40 @@
 
         </label> -->
 
-      <mat-form-field class="input-width" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput id="loginFormUsername" type="text" placeholder="Email" formControlName="username">
-        <mat-error id="loginFormUsernameRequiredError" *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.required">Email
-          is
-          required </mat-error>
-        <mat-error *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.email">Email
-          is incorrect </mat-error>
-      </mat-form-field>
+                    <mat-form-field class="input-width" appearance="outline">
+                      <mat-label>Email</mat-label>
+                      <input matInput id="loginFormUsername" type="text" placeholder="Email" formControlName="username">
+                      <mat-error id="loginFormUsernameRequiredError" *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.required">Email
+                        is
+                        required </mat-error>
+                      <mat-error *ngIf="loginForm.controls.username.touched  && loginForm.controls.username.errors && loginForm.controls.username.errors.email">Email
+                        is incorrect </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group">
+                    <mat-form-field class="input-width" appearance="outline">
+                      <mat-label>Password</mat-label>
+                      <input matInput id="loginFormPassword" type="password" placeholder="Password" formControlName="password">
+                      <mat-error id="loginFormPasswordRequiredError" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.required">Password
+                        is
+                        required </mat-error>
+                      <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.pattern">Password
+                        must be at least 8 characters</mat-error>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="form-group">
+                    <button mat-raised-button color="primary" id="LoginfromSignInButton" type="submit">Login</button></div>
+
+                </form>
+                <span>Don’t have an account? <a id="registerLink" [routerLink]="['/register']">Sign up</a></span>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group">
-      <mat-form-field class="input-width" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput id="loginFormPassword" type="password" placeholder="Password" formControlName="password">
-        <mat-error id="loginFormPasswordRequiredError" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.required">Password
-          is
-          required </mat-error>
-        <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.pattern">Password
-          must be at least 8 characters</mat-error>
-      </mat-form-field>
-
-    </div>
-    <div class="form-group">
-      <button mat-raised-button color="primary" id="LoginfromSignInButton" type="submit">Login</button></div>
-
-  </form>
-
-
-  <span>Don’t have an account? <a id="registerLink" [routerLink]="['/register']">Sign up</a></span>
-
-</div>
+  </div>
