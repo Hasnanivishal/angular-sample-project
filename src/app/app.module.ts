@@ -12,6 +12,8 @@ import { ErrorComponent } from './error/error.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatButtonModule, MatMenuModule } from '@angular/material';
 import { CcMarkDownDirective } from './directives/cc-mark-down.directive';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { CcMarkDownDirective } from './directives/cc-mark-down.directive';
     MatInputModule,
     MatButtonModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

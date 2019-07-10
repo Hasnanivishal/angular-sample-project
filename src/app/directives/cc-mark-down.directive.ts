@@ -10,6 +10,10 @@ export class CcMarkDownDirective {
 
   italicButton: any;
   italicButtonText: any;
+
+  linkButton: any;
+  linkButtonText: any;
+
   previewDiv: any;
   @Output() valueChange = new EventEmitter<object>();
 
@@ -17,32 +21,66 @@ export class CcMarkDownDirective {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
+    debugger;
     this.nativeElement = this.element.nativeElement;
     this.element.nativeElement.value = this.element.nativeElement.value.trim();
     const outerDiv = this.renderer.createElement('div');
-    const div = this.renderer.createElement('div');
+    const innerDiv = this.renderer.createElement('div');
     this.previewDiv = this.renderer.createElement('div');
-    this.renderer.setStyle(this.previewDiv, 'width', '500px');
-    this.renderer.setStyle(this.previewDiv, 'padding', '5px');
-    this.renderer.setStyle(this.previewDiv, 'border', '2px solid gray');
+    const previewText = this.renderer.createElement('div');
+
+    this.renderer.setStyle(this.element.nativeElement, 'height', '150px');
+
+    this.renderer.setStyle(this.previewDiv, 'width', '512px');
+    this.renderer.setStyle(this.previewDiv, 'height', '150px');
+    this.renderer.setStyle(this.previewDiv, 'padding', '2px');
+    this.renderer.setStyle(this.previewDiv, 'border', '1px solid gray');
+    this.renderer.setStyle(this.previewDiv, 'margin-top', '30px');
+
+
+    this.renderer.setStyle(innerDiv, 'width', '512px');
+    this.renderer.setStyle(innerDiv, 'padding', '2px');
+    this.renderer.setStyle(innerDiv, 'border', '1px solid gray');
+    this.renderer.setStyle(innerDiv, 'margin-top', '-6px');
+
+    this.renderer.setStyle(previewText, 'width', '512px');
+    this.renderer.setStyle(previewText, 'padding', '2px');
+    this.renderer.setStyle(previewText, 'border', '1px solid gray');
+    const previewTextData = this.renderer.createText('PREVIEW');
+    this.renderer.appendChild(previewText, previewTextData);
 
     // Bold Button
-    this.boldButton = this.renderer.createElement('Button');
-    this.boldButtonText = this.renderer.createText('Bold');
-    this.renderer.addClass(this.boldButton, 'classBold');
+    this.boldButton = this.renderer.createElement('a');
+    this.boldButtonText = this.renderer.createText('B');
+    this.renderer.setStyle(this.boldButton, 'margin-left', '5px');
+    this.renderer.setStyle(this.boldButton, 'cursor', 'pointer');
     this.renderer.appendChild(this.boldButton, this.boldButtonText);
 
     // Italic Button
-    this.italicButton = this.renderer.createElement('Button');
-    this.italicButtonText = this.renderer.createText('Italic');
+    this.italicButton = this.renderer.createElement('a');
+    this.italicButtonText = this.renderer.createText('I');
     this.renderer.addClass(this.italicButton, 'classItalic');
+    this.renderer.setStyle(this.italicButton, 'margin-left', '10px');
+    this.renderer.setStyle(this.italicButton, 'cursor', 'pointer');
     this.renderer.appendChild(this.italicButton, this.italicButtonText);
 
-    this.renderer.appendChild(div, this.boldButton);
-    this.renderer.appendChild(div, this.italicButton);
 
-    this.renderer.appendChild(outerDiv, div);
+    // link ButtonText
+    this.linkButton = this.renderer.createElement('a');
+    this.linkButtonText = this.renderer.createText('Link');
+    this.renderer.addClass(this.linkButton, 'classItalic');
+    this.renderer.setStyle(this.linkButton, 'margin-left', '10px');
+    this.renderer.setStyle(this.linkButton, 'cursor', 'pointer');
+    this.renderer.appendChild(this.linkButton, this.linkButtonText);
+
+
+    this.renderer.appendChild(innerDiv, this.boldButton);
+    this.renderer.appendChild(innerDiv, this.italicButton);
+    this.renderer.appendChild(innerDiv, this.linkButton);
+
+    this.renderer.appendChild(outerDiv, innerDiv);
     this.renderer.appendChild(outerDiv, this.previewDiv);
+    this.renderer.appendChild(outerDiv, previewText);
 
     this.renderer.insertBefore(this.element.nativeElement.parentNode, outerDiv, this.element.nativeElement.nextSibling);
 
@@ -54,9 +92,32 @@ export class CcMarkDownDirective {
       this.makeContentItalic(event);
     });
 
+    this.renderer.listen(this.linkButton, 'click', (event) => {
+       // [[url|name]]
+       debugger;
+       console.log(this.element.nativeElement);
+
+       this.element.nativeElement.value = this.element.nativeElement.value.substring(0, this.element.nativeElement.selectionStart)
+        +  '[[ | ]]' +
+        this.element.nativeElement.value.substring(this.element.nativeElement.selectionStart);
+        this.element.nativeElement.focus();
+
+        if (this.element.nativeElement.selectionStart > 2) {
+          // tslint:disable-next-line:max-line-length
+          this.element.nativeElement.selectionEnd = this.element.nativeElement.selectionStart - 2;
+          // this.element.nativeElement.setSelectionRange(this.element.nativeElement.selectionStart - 2, this.element.nativeElement.selectionEnd);
+        } else {
+          this.element.nativeElement.selectionEnd = this.element.nativeElement.selectionStart;
+          // this.element.nativeElement.setSelectionRange(this.element.nativeElement.selectionStart, this.element.nativeElement.selectionEnd);
+
+        }
+    });
+
+
   }
 
   makeContentBold(event: any) {
+    debugger;
     let selectionStart = this.element.nativeElement.selectionStart;
     const selectionEnd = this.element.nativeElement.selectionEnd;
     let selectedStringMarkDown = '';
@@ -80,6 +141,13 @@ export class CcMarkDownDirective {
       selectedStringHTML = '<strong>' + selectedString + '</strong>';
     }
 
+    if (this.checkContentItalic(selectedStringMarkDown)) {
+      selectedStringHTML = this.updateHTMLTags(selectedStringMarkDown, '//', 'em', selectedStringHTML);
+    }
+
+
+
+
     // tslint:disable-next-line:max-line-length
     if (selectionStart === 0 && selectionEnd === 0) {
       this.valueChange.emit({
@@ -101,9 +169,9 @@ export class CcMarkDownDirective {
         html: this.element.nativeElement.value.substring(0, selectionStart) + selectedStringHTML + this.element.nativeElement.value.substring(selectionEnd)
       });
 
-      this.renderer.setProperty(this.previewDiv, 'innerHTML', 
-      // tslint:disable-next-line:max-line-length
-      this.element.nativeElement.value.substring(0, selectionStart) + selectedStringHTML + this.element.nativeElement.value.substring(selectionEnd));
+      this.renderer.setProperty(this.previewDiv, 'innerHTML',
+        // tslint:disable-next-line:max-line-length
+        this.element.nativeElement.value.substring(0, selectionStart) + selectedStringHTML + this.element.nativeElement.value.substring(selectionEnd));
       // tslint:disable-next-line:max-line-length
       this.element.nativeElement.value = this.element.nativeElement.value.substring(0, selectionStart) + selectedStringMarkDown + this.element.nativeElement.value.substring(selectionEnd);
       // tslint:disable-next-line:max-line-length
@@ -113,6 +181,7 @@ export class CcMarkDownDirective {
   }
 
   makeContentItalic(event: any) {
+    debugger;
     let selectionStart = this.element.nativeElement.selectionStart;
     const selectionEnd = this.element.nativeElement.selectionEnd;
     let selectedStringMarkDown = '';
@@ -132,15 +201,16 @@ export class CcMarkDownDirective {
       selectedString = selectedString.replace(/[//]+/g, '');
       selectedStringMarkDown = '' + selectedString + '';
       selectedStringHTML = '' + selectedString + '';
-    } else if (this.checkContentBold(selectedString)) {
-      selectedString = selectedString.replace(/[**]+/g, '');
-      selectedStringMarkDown = '**//' + selectedString + '//**';
-      selectedStringHTML = '<strong><em>' + selectedString + '</em></strong>';
     }
     // tslint:disable-next-line:one-line
     else {
       selectedStringMarkDown = '//' + selectedString + '//';
       selectedStringHTML = '<em>' + selectedString + '</em>';
+    }
+
+
+    if (this.checkContentBold(selectedStringMarkDown)) {
+      selectedStringHTML = this.updateHTMLTags(selectedStringMarkDown, '**', 'strong', selectedStringHTML);
     }
 
     if (selectionStart === 0 && selectionEnd === 0) {
@@ -193,10 +263,11 @@ export class CcMarkDownDirective {
     }
   }
 
-  renderOtherTagsHTML(otherTag: any, selectedString: any) {
-  }
-
-  renderOtherTagsMarkDown(otherTag: any, selectedString: any) {
-
+  updateHTMLTags(selectedStringMarkDown, markDown, markDownHTML, selectedStringHTML) {
+    // tslint:disable-next-line:max-line-length
+    const markdownString = selectedStringMarkDown.slice(selectedStringMarkDown.indexOf(markDown) + 2, selectedStringMarkDown.lastIndexOf(markDown));
+    selectedStringHTML = selectedStringHTML.replace(markDown + markdownString + markDown,
+      '<' + markDownHTML + '>' + markdownString + '</' + markDownHTML + '>');
+    return selectedStringHTML;
   }
 }
