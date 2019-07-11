@@ -11,6 +11,9 @@ export class HomePageListingComponent implements OnInit {
 
   @Output() removeApi = new EventEmitter<string>();
 
+  sampleData = ['A', 'B', 'C', 'D', 'E'];
+  sampleNgSwitch: String = 'test'; // test1
+
   constructor() { }
 
   ngOnInit() {

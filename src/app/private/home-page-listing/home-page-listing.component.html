@@ -1,9 +1,10 @@
 <div *ngIf="selectedApi == 'Introduction'" class="{{selectedApi}}">
-<strong>Introduction to Angular Link</strong>
-<p>
-    These Angular docs help you learn and use the Angular platform and framework, from your first app to optimizing complex enterprise apps. 
-    Tutorials and guides include downloadable example to accelerate your projects.
-</p>
+    <strong>Introduction to Angular Link</strong>
+    <p>
+        These Angular docs help you learn and use the Angular platform and framework, from your first app to optimizing
+        complex enterprise apps.
+        Tutorials and guides include downloadable example to accelerate your projects.
+    </p>
 </div>
 
 <div *ngIf="selectedApi == 'SetUp'">
@@ -14,11 +15,19 @@
 
 <div *ngIf="selectedApi == 'Architecture'">
     Architecture overview
+    <ng-container *ngFor='let data of sampleData'>
+        <span *ngIf='data != "A"'>{{data}}</span>
+    </ng-container>
     <button (click)="removeSelectedApi('Architecture')">Remove</button>
 </div>
 
 
 <div *ngIf="selectedApi == 'Cheat Sheet'">
     Cheat Sheet
+    <div [ngSwitch]="sampleNgSwitch">
+        <span *ngSwitchCase='"test"'>Test</span>
+        <span *ngSwitchCase="'test1'">Test 1</span>
+        <span *ngSwitchDefault >Test Default {{sampleNgSwitch}}</span>
+    </div>
     <button (click)="removeSelectedApi('Cheat Sheet')">Remove</button>
-</div> 
+</div>

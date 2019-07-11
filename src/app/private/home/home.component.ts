@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRe
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { DynamicComponentDirective } from 'src/app/directives/dynamic-component.directive';
 import { ErrorComponent } from 'src/app/error/error.component';
+import { HomePageListingComponent } from '../home-page-listing/home-page-listing.component';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   apiList = ['Introduction', 'SetUp', 'Architecture', 'Cheat Sheet'];
   selectedApi: any = 'Introduction';
   @ViewChild(DynamicComponentDirective, { static: true }) dynamicComponentDirective: DynamicComponentDirective;
+  @ViewChild(HomePageListingComponent, { static: true }) homePageListingComponent: HomePageListingComponent;
 
   currentAdIndex = -1;
   interval: any;
@@ -34,6 +36,8 @@ export class HomeComponent implements OnInit {
         this.getAds();
       }
     );
+
+   // console.log('child component', this.homePageListingComponent);
   }
 
   getAds() {
