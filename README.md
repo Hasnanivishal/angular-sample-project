@@ -3,6 +3,8 @@
 This project was created to learn Angular 8 with all the advanced features.
 The Live [Demo](https://vishal-hasnani.herokuapp.com/) of this project.
 
+![angular sample App](https://i.stack.imgur.com/JtcvH.png)
+
 ### Features
 
 - Registration

@@ -67,7 +67,7 @@ export class CcMarkDownDirective {
 
     // link ButtonText
     this.linkButton = this.renderer.createElement('a');
-    this.linkButtonText = this.renderer.createText('Link');
+    this.linkButtonText = this.renderer.createText('S');
     this.renderer.addClass(this.linkButton, 'classItalic');
     this.renderer.setStyle(this.linkButton, 'margin-left', '10px');
     this.renderer.setStyle(this.linkButton, 'cursor', 'pointer');
@@ -93,25 +93,64 @@ export class CcMarkDownDirective {
     });
 
     this.renderer.listen(this.linkButton, 'click', (event) => {
-       // [[url|name]]
-       debugger;
-       console.log(this.element.nativeElement);
-
-       this.element.nativeElement.value = this.element.nativeElement.value.substring(0, this.element.nativeElement.selectionStart)
-        +  '[[ | ]]' +
-        this.element.nativeElement.value.substring(this.element.nativeElement.selectionStart);
-        this.element.nativeElement.focus();
-
-        if (this.element.nativeElement.selectionStart > 2) {
-          // tslint:disable-next-line:max-line-length
-          this.element.nativeElement.selectionEnd = this.element.nativeElement.selectionStart - 2;
-          // this.element.nativeElement.setSelectionRange(this.element.nativeElement.selectionStart - 2, this.element.nativeElement.selectionEnd);
-        } else {
-          this.element.nativeElement.selectionEnd = this.element.nativeElement.selectionStart;
-          // this.element.nativeElement.setSelectionRange(this.element.nativeElement.selectionStart, this.element.nativeElement.selectionEnd);
-
-        }
+      this.makecontentStrikeThrough(event);
     });
+
+
+  }
+
+  makecontentStrikeThrough(event: any) {
+    debugger;
+    const selectionStart = this.element.nativeElement.selectionStart;
+    const selectionEnd = this.element.nativeElement.selectionEnd;
+    const selectedString = this.element.nativeElement.value.slice(selectionStart, selectionEnd);
+
+    // Empty string
+    if (!selectedString) {
+      this.valueChange.emit({
+        // tslint:disable-next-line:max-line-length
+        markDown: this.element.nativeElement.value.substring(0, selectionEnd) + '~~strikethrough~~',
+        // tslint:disable-next-line:max-line-length
+        html: this.element.nativeElement.value.substring(0, selectionEnd) + '<del>strikethrough</del>'
+      });
+
+      // tslint:disable-next-line:max-line-length
+      this.renderer.setProperty(this.previewDiv, 'innerHTML', this.element.nativeElement.value.substring(0, selectionEnd) + '<del>strikethrough</del>');
+
+      this.element.nativeElement.value = this.element.nativeElement.value.substring(0, selectionEnd) + '~~strikethrough~~';
+      this.element.nativeElement.focus();
+      selectionStart === 0 ? this.element.nativeElement.selectionStart = 2 : this.element.nativeElement.selectionStart = selectionStart;
+      selectionEnd === 0 ? this.element.nativeElement.selectionEnd = 15 : this.element.nativeElement.selectionEnd = selectionEnd;
+    } else {
+      let strikedString = this.element.nativeElement.value.slice(selectionStart - 2, selectionEnd + 2);
+      if (strikedString.startsWith('~~') && strikedString.endsWith('~~')) {
+
+        strikedString = strikedString.replace(/[~~]+/g, '');
+        this.valueChange.emit({
+          markDown: this.element.nativeElement.value.substring(0, selectionStart - 2) +
+            strikedString +
+            this.element.nativeElement.value.substring(selectionEnd + 2),
+
+          html: this.element.nativeElement.value.substring(0, selectionStart - 2) +
+            strikedString +
+            this.element.nativeElement.value.substring(selectionEnd + 2)
+        });
+
+        this.renderer.setProperty(this.previewDiv, 'innerHTML',
+          this.element.nativeElement.value.substring(0, selectionStart - 2) +
+          strikedString +
+          this.element.nativeElement.value.substring(selectionEnd + 2));
+
+        this.element.nativeElement.value = this.element.nativeElement.value.substring(0, selectionStart - 2) +
+          strikedString +
+          this.element.nativeElement.value.substring(selectionEnd + 2);
+      } else {
+
+      }
+
+      // else remove the tags
+
+    }
 
 
   }
