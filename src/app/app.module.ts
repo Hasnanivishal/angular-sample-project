@@ -18,6 +18,8 @@ import { BlogComponent } from './blogs/blog/blog.component';
 import { BlogHomeComponent } from './blogs/blog-home/blog-home.component';
 import { AboutComponent } from './blogs/about/about.component';
 import { ContactComponent } from './blogs/contact/contact.component';
+import { GetStartedComponent } from './get-started/get-started.component';
+
 
 
 
@@ -31,7 +33,8 @@ import { ContactComponent } from './blogs/contact/contact.component';
     BlogComponent,
     BlogHomeComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    GetStartedComponent
   ],
   imports: [
     BrowserModule,
