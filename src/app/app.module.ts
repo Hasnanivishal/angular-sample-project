@@ -15,10 +15,9 @@ import { CcMarkDownDirective } from './directives/cc-mark-down.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BlogComponent } from './blogs/blog/blog.component';
-import { BlogHomeComponent } from './blogs/blog-home/blog-home.component';
-import { AboutComponent } from './blogs/about/about.component';
-import { ContactComponent } from './blogs/contact/contact.component';
 import { GetStartedComponent } from './get-started/get-started.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BlogContentComponent } from './blogs/blog-content/blog-content.component';
 
 
 
@@ -31,10 +30,8 @@ import { GetStartedComponent } from './get-started/get-started.component';
     ErrorComponent,
     CcMarkDownDirective,
     BlogComponent,
-    BlogHomeComponent,
-    AboutComponent,
-    ContactComponent,
-    GetStartedComponent
+    GetStartedComponent,
+    BlogContentComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +43,7 @@ import { GetStartedComponent } from './get-started/get-started.component';
     MatInputModule,
     MatButtonModule,
     MatMenuModule,
+    ScrollingModule,
     MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

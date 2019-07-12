@@ -32,6 +32,14 @@ export class GuestUserService {
   }
 
   dynamicSampleData() {
-    return this.http.get('assets/sampledata.json');
+    return this.http.get('assets/json/sampledata.json');
+  }
+
+  blogs() {
+    return this.http.get('assets/json/blog.json');
+  }
+
+  blogContent() {
+    return this.http.get('assets/json/blog-content.json');
   }
 }

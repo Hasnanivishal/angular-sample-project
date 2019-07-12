@@ -1,0 +1,15 @@
+
+
+<div class="card" *ngIf="selectedblog">
+    <div class="card-header">
+        Featured  
+        <span>
+            <button (click)="closeBlog()">Close</button>
+        </span>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{selectedblog?.titile}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{selectedblog?.subTitle}}</h6>
+        {{selectedblog?.description}}
+    </div>
+</div>

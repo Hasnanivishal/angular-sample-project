@@ -96,6 +96,9 @@ export class CcMarkDownDirective {
       this.makecontentStrikeThrough(event);
     });
 
+    this.renderer.listen(this.element.nativeElement, 'input', (event) => {
+      this.renderer.setProperty(this.previewDiv, 'innerHTML', this.parseMarkdownTagToHTML(this.element.nativeElement.value));
+    });
 
   }
 
@@ -308,5 +311,14 @@ export class CcMarkDownDirective {
     selectedStringHTML = selectedStringHTML.replace(markDown + markdownString + markDown,
       '<' + markDownHTML + '>' + markdownString + '</' + markDownHTML + '>');
     return selectedStringHTML;
+  }
+
+  parseMarkdownTagToHTML(markDownString: String) {
+    debugger;
+
+    markDownString = markDownString.replace(/\*(\w+)\*/g, '<strong>$1</strong>');
+    markDownString = markDownString.replace(/\/(\w+)\//g, '<em>$1</em>');
+    markDownString = markDownString.replace(/\~(\w+)\~/g, '<del>$1</del>');
+    return markDownString;
   }
 }

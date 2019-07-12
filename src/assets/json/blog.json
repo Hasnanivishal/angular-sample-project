@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "titile": "Angular titile 1",
+        "subTitle": "Angular subTitle 1"
+    },
+    {
+        "id": 2,
+        "titile": "Angular titile 2",
+        "subTitle": "Angular subTitle 2"
+    },
+    {
+        "id": 3,
+        "titile": "Angular titile 3",
+        "subTitle": "Angular subTitle 3"
+    },
+    {
+        "id": 4,
+        "titile": "Angular titile 4",
+        "subTitle": "Angular subTitle 4"
+    },
+    {
+        "id": 5,
+        "titile": "Angular titile 5",
+        "subTitle": "Angular subTitle 5"
+    },
+    {
+        "id": 6,
+        "titile": "Angular titile 6",
+        "subTitle": "Angular subTitle 6"
+    }
+]
