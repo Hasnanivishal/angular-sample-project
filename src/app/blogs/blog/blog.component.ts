@@ -16,9 +16,9 @@ import { GuestUserService } from 'src/app/service/guest-user.service';
         cursor: 'pointer'
       })),
       state('closed', style({
-        width: '90%',
+        width: '98%',
         opacity: 0.5,
-        backgroundColor: 'grey',
+        // backgroundColor: 'grey',
         cursor: 'pointer'
       })),
       transition('* => *', [
@@ -31,7 +31,7 @@ export class BlogComponent implements OnInit {
 
   isOpen = true;
   blogs: any;
-  blogId: any = 1;
+  blogId: any;
   blogContents: any;
 
   constructor(private guestUserService: GuestUserService) { }

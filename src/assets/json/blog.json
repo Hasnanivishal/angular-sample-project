@@ -1,8 +1,8 @@
 [
     {
         "id": 1,
-        "titile": "Angular titile 1",
-        "subTitle": "Angular subTitle 1"
+        "titile": "Complete beginner guide to publish an Angular library to npm",
+        "subTitle": "1. Learn to write libraries in Angular that is compatible with npm format. 2. Learn to publish it to npm."
     },
     {
         "id": 2,

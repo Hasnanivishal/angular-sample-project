@@ -21,14 +21,29 @@
 
 <div class="container">
     <div class="row">
+
         <div [ngClass]="isOpen ? 'col-12' : 'col-3'">
-            <div *ngFor="let blog of blogs" [@childAnimation]="isOpen ? 'open' : 'closed'" class="open-close-container card row">
-                <div class="card-body" (click)="loadBlogContent(blog); isOpen = false;">
-                    <h5 class="card-title">{{blog?.titile}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{blog?.subTitle}}</h6>
+            <div *ngIf="!isOpen">
+                <cdk-virtual-scroll-viewport class="list-container lg" itemSize="50" class="example-viewport">
+                    <div *cdkVirtualFor="let blog of blogs" [@childAnimation]="isOpen ? 'open' : 'closed'" class="open-close-container card row">
+                        <div class="card-body" [ngClass]="{'active': blogId == blog.id}" (click)="loadBlogContent(blog); isOpen = false;">
+                            <h5 class="card-title">{{blog?.titile}}</h5>
+                            <h6 *ngIf="isOpen" class="card-subtitle mb-2 text-muted">{{blog?.subTitle}}</h6>
+                        </div>
+                    </div>
+                </cdk-virtual-scroll-viewport>
+            </div>
+            <div *ngIf="isOpen">
+                <div *ngFor="let blog of blogs; trackBy:identify" [@childAnimation]="isOpen ? 'open' : 'closed'" class="open-close-container card row">
+                    <div class="card-body" [ngClass]="{'active': blogId == blog.id}" (click)="loadBlogContent(blog); isOpen = false;">
+                        <h5 class="card-title">{{blog?.titile}}</h5>
+                        <h6 *ngIf="isOpen" class="card-subtitle mb-2 text-muted">{{blog?.subTitle}}</h6>
+                    </div>
                 </div>
             </div>
+
         </div>
+
 
         <div [ngClass]="isOpen ? '' : 'col-9'">
             <div *ngIf="!isOpen">
