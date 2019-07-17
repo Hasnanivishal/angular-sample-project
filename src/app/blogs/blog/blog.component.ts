@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 import { GuestUserService } from 'src/app/service/guest-user.service';
+import { COMPONENT_LEVEL_VALUE, COMPONENT_LEVEL_SELF, COMPONENT_LEVEL_SKIP_SELF, COMMON_VALUE } from 'src/app/app.config';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css'],
+  providers: [
+  { provide: COMPONENT_LEVEL_VALUE, useValue: 'BlogComponent' },
+  { provide: COMPONENT_LEVEL_SKIP_SELF, useValue: 'BlogComponent' }],
   animations: [
     trigger('childAnimation', [
       // ...
@@ -34,14 +38,18 @@ export class BlogComponent implements OnInit {
   blogId: any;
   blogContents: any;
 
-  constructor(private guestUserService: GuestUserService) { }
+  constructor(private guestUserService: GuestUserService,
+    @Inject(COMMON_VALUE) public title: string,
+    @Inject(COMPONENT_LEVEL_VALUE) public title1: string) { }
 
   ngOnInit() {
+
     this.getBlogContents();
     this.guestUserService.blogs().subscribe(
       result => {
         this.blogs = result;
-        console.log(this.blogs);
+        console.log('COMMON_VALUE', this.title);
+        console.log('COMPONENT_LEVEL_VALUE', this.title1);
       }
     );
   }

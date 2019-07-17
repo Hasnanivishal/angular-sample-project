@@ -4,7 +4,6 @@ import { Directive, Input, ElementRef, Renderer2, Output, EventEmitter } from '@
   selector: '[appCcMarkDown]'
 })
 export class CcMarkDownDirective {
-  private nativeElement: Node;
   boldButton: any;
   boldButtonText: any;
 
@@ -22,7 +21,6 @@ export class CcMarkDownDirective {
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     debugger;
-    this.nativeElement = this.element.nativeElement;
     this.element.nativeElement.value = this.element.nativeElement.value.trim();
     const outerDiv = this.renderer.createElement('div');
     const innerDiv = this.renderer.createElement('div');
@@ -315,10 +313,13 @@ export class CcMarkDownDirective {
 
   parseMarkdownTagToHTML(markDownString: String) {
     debugger;
+    markDownString = markDownString.replace(/\*(\/+)(\w+)(\/?)\*/g, '<strong><em>$1$2$3</em></strong>');
+    markDownString = markDownString.replace(/\/(\*+)(\w+)(\/?)\//g, '<em><strong>$1$2$3</strong></em>');
 
     markDownString = markDownString.replace(/\*(\w+)\*/g, '<strong>$1</strong>');
     markDownString = markDownString.replace(/\/(\w+)\//g, '<em>$1</em>');
     markDownString = markDownString.replace(/\~(\w+)\~/g, '<del>$1</del>');
+    
     return markDownString;
   }
 }

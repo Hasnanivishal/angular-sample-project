@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, Input, Host, Optional } from '@angular/core';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { DynamicComponentDirective } from 'src/app/directives/dynamic-component.directive';
 import { ErrorComponent } from 'src/app/error/error.component';
 import { HomePageListingComponent } from '../home-page-listing/home-page-listing.component';
+import { LoggerService } from 'src/app/service/logger.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,14 @@ export class HomeComponent implements OnInit {
   interval: any;
   usersData: any;
 
-  constructor(private guestUserService: GuestUserService, private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private guestUserService: GuestUserService, private componentFactoryResolver: ComponentFactoryResolver,
+    @Host()     // limit search for logger; hides the application-wide logger
+    @Optional() // ok if the logger doesn't exist
+    private loggerService: LoggerService) {
+    if (loggerService) {
+      loggerService.logInfo('HomeComponent');
+    }
+  }
 
   ngOnInit() {
     this.getGreetingMessage();
@@ -37,7 +45,7 @@ export class HomeComponent implements OnInit {
       }
     );
 
-   // console.log('child component', this.homePageListingComponent);
+    // console.log('child component', this.homePageListingComponent);
   }
 
   getAds() {
