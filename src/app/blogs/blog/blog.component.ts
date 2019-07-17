@@ -1,15 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Injectable, forwardRef } from '@angular/core';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 import { GuestUserService } from 'src/app/service/guest-user.service';
 import { COMPONENT_LEVEL_VALUE, COMPONENT_LEVEL_SELF, COMPONENT_LEVEL_SKIP_SELF, COMMON_VALUE } from 'src/app/app.config';
+import { LoggerService } from 'src/app/service/logger.service';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css'],
   providers: [
-  { provide: COMPONENT_LEVEL_VALUE, useValue: 'BlogComponent' },
-  { provide: COMPONENT_LEVEL_SKIP_SELF, useValue: 'BlogComponent' }],
+    { provide: COMPONENT_LEVEL_VALUE, useValue: 'BlogComponent' },
+    { provide: COMPONENT_LEVEL_SKIP_SELF, useValue: 'BlogComponent' }],
   animations: [
     trigger('childAnimation', [
       // ...
@@ -40,10 +41,11 @@ export class BlogComponent implements OnInit {
 
   constructor(private guestUserService: GuestUserService,
     @Inject(COMMON_VALUE) public title: string,
-    @Inject(COMPONENT_LEVEL_VALUE) public title1: string) { }
+    @Inject(COMPONENT_LEVEL_VALUE) public title1: string,
+    private loggerService: LoggerService) { }
 
   ngOnInit() {
-
+    this.loggerService.logInfo('Blog Page');
     this.getBlogContents();
     this.guestUserService.blogs().subscribe(
       result => {
@@ -70,3 +72,6 @@ export class BlogComponent implements OnInit {
     this.isOpen = event;
   }
 }
+
+
+
