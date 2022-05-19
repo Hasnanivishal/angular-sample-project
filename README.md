@@ -1,3 +1,11 @@
+Schemantics
+WebWorker
+Service Worker
+Service Worker notification
+App Shell
+
+
+
 ## Introduction
 
 This project was created to learn Angular 8 with all the advanced features.
