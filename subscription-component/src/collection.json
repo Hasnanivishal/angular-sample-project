@@ -1,6 +1,10 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
+    "ng-add": {
+      "description": "Add my library to the project.",
+      "factory": "./ng-add/index#ngAdd"
+    },
     "subscription-component": {
       "description": "A blank schematic.",
       "factory": "./subscription-component/index#subscriptionComponent",
